@@ -212,6 +212,7 @@ tr{cursor:pointer}
     <div class="modal-tabs">
       <button class="mtab on" onclick="switchMTab(this,'tab-crm')">Team CRM</button>
       <button class="mtab" onclick="switchMTab(this,'tab-team')">Sales Team</button>
+      <button class="mtab" onclick="switchMTab(this,'tab-backend')">🔌 REBEC Server</button>
     </div>
 
     <!-- Tab: CRM -->
@@ -225,6 +226,21 @@ tr{cursor:pointer}
       </div>
       <div class="field"><label>X-Master-Key</label><input id="inp-key" type="text" placeholder="$2b$10$..."></div>
       <div class="field"><label>Bin ID</label><input id="inp-bin" type="text" placeholder="66ab1c2..."></div>
+    </div>
+
+    <!-- Tab: Backend -->
+    <div id="tab-backend" style="display:none">
+      <div class="note-box">
+        Pour accéder aux données <strong>REBEC</strong> (Brésil), <strong>WHO ICTRP</strong> et autres registres LatAm,
+        déployez le serveur Python inclus sur <a href="https://railway.app" target="_blank">railway.app</a> (gratuit)
+        et collez son URL ci-dessous.<br><br>
+        Voir le fichier <code>README.md</code> du dossier <code>qima-server</code> pour les instructions.
+      </div>
+      <div class="field">
+        <label>URL du serveur Railway</label>
+        <input id="inp-backend" type="text" placeholder="https://qima-server-production.up.railway.app">
+      </div>
+      <div id="backend-status" style="font-size:12px;color:var(--muted);margin-top:8px"></div>
     </div>
 
     <!-- Tab: Team -->
@@ -431,7 +447,7 @@ let team = JSON.parse(localStorage.getItem('qima-team') || '["Nicolas Jonquet"]'
 function switchMTab(btn, tabId) {
   document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  ['tab-crm','tab-team'].forEach(id=>{
+  ['tab-crm','tab-team','tab-backend'].forEach(id=>{
     document.getElementById(id).style.display = id===tabId?'block':'none';
   });
 }
@@ -439,6 +455,8 @@ function openModal(){
   document.getElementById('inp-key').value = cfg.apiKey||'';
   document.getElementById('inp-bin').value = cfg.binId||'';
   renderTeamList();
+  const bk = document.getElementById('inp-backend');
+  if(bk) bk.value = localStorage.getItem('qima-backend') || '';
   document.getElementById('modal').style.display='flex';
 }
 function closeModal(){ document.getElementById('modal').style.display='none'; }
@@ -447,6 +465,9 @@ function saveSettings(){
   cfg.binId  = document.getElementById('inp-bin').value.trim();
   localStorage.setItem('qima-cfg',  JSON.stringify(cfg));
   localStorage.setItem('qima-team', JSON.stringify(team));
+  const newBackend = document.getElementById('inp-backend')?.value.trim().replace(/\/$/,'');
+  if(newBackend) localStorage.setItem('qima-backend', newBackend);
+  else localStorage.removeItem('qima-backend');
   closeModal();
   updateAssignedFilter();
   loadCRM().then(()=>{renderKPIs();render();});
@@ -498,6 +519,49 @@ function updateAssignedFilter(){
 // API
 // ══════════════════════════════════════════════
 const IS_LOCAL = window.location.protocol === 'file:';
+
+// ── BACKEND CONFIG ─────────────────────────────────────────
+// Set this to your Railway URL once deployed, e.g.:
+// const BACKEND_URL = "https://qima-server-production.up.railway.app";
+const BACKEND_URL = localStorage.getItem('qima-backend') || null;
+
+async function fetchBEFromBackend() {
+  if (!BACKEND_URL) return [];
+  try {
+    const resp = await fetch(`${BACKEND_URL}/api/be-trials?country=all`, 
+      {signal: AbortSignal.timeout(30000)});
+    if (!resp.ok) return [];
+    const data = await resp.json();
+    return (data.data || []).map(s => ({
+      nctId:       s.id,
+      title:       s.title,
+      status:      s.status || 'UNKNOWN',
+      firstPosted: s.firstPosted || null,
+      lastUpdate:  null,
+      primEnd:     s.primEnd || null,
+      sponsor:     s.sponsor || '—',
+      studyType:   s.studyType || 'INTERVENTIONAL',
+      phases:      [],
+      phLbl:       s.phase || 'NA',
+      enrollment:  s.enrollment || null,
+      enrollType:  null,
+      conditions:  s.conditions || [],
+      allCountries:[s.country || 'Brazil'],
+      latamCountries: s.latamCountries || [s.country || 'Brazil'],
+      brSites:     0,
+      scope:       'national',
+      isBE:        true,
+      isEU:        false,
+      cro:         null,
+      area:        'be',
+      primaryCountry: s.country || 'Brazil',
+      source:      s.source || 'REBEC',
+    }));
+  } catch(e) {
+    console.warn('Backend BE fetch failed:', e.message);
+    return [];
+  }
+}
 const PROXY = 'https://corsproxy.io/?';
 
 async function apiFetch(locn, extraParams={}, pageSize=500){
@@ -601,12 +665,32 @@ async function loadAll(){
     renderLoadingScreen();
   });
 
-  // Also fetch BE specifically across LatAm
-  const beFetch = apiFetch('South America', {'query.term':'bioequivalence'}, 300)
-    .then(raw => merge(raw.map(s=>parseStudy(s,'Brazil'))))
-    .catch(()=>{});
+  // Dedicated BE/BA searches per country — 'South America' not recognized by the API
+  const BE_TERMS = ['bioequivalence', 'bioavailability pharmacokinetic', 'BA BE generic drug'];
+  const BE_COUNTRIES = ['Brazil','Argentina','Mexico','Chile','Colombia','Peru','Uruguay'];
+  const beFetches = [];
+  for(const country of BE_COUNTRIES){
+    for(const term of BE_TERMS){
+      beFetches.push(
+        apiFetch(country, {'query.term': term}, 300)
+          .then(raw => merge(raw.map(s => {
+            const p = parseStudy(s, country);
+            p.isBE = true; p.area = 'be'; return p;
+          })))
+          .catch(()=>{})
+      );
+    }
+  }
 
-  await Promise.all([...fetches, beFetch]);
+  // Fetch BA/BE from backend (REBEC + WHO ICTRP) if configured
+  const backendBEFetch = fetchBEFromBackend().then(beStudies => {
+    if(beStudies.length > 0) {
+      console.log(`Backend returned ${beStudies.length} BE studies`);
+      merge(beStudies);
+    }
+  }).catch(()=>{});
+
+  await Promise.all([...fetches, ...beFetches, backendBEFetch]);
 
   S.studies = [...map.values()].sort((a,b)=>new Date(b.firstPosted||0)-new Date(a.firstPosted||0));
   S.loading = false;
@@ -620,7 +704,7 @@ function renderLoadingScreen(){
     <div class="loading-wrap">
       <div class="spinner"></div>
       <div class="loading-title">Loading LatAm clinical trials registry</div>
-      <div class="loading-sub">Fetching from ClinicalTrials.gov across ${LATAM.length} countries</div>
+      <div class="loading-sub">Fetching from ClinicalTrials.gov across ${LATAM.length} countries${BACKEND_URL?' + REBEC/WHO ICTRP via backend':''}</div>
       <div class="progress-countries">
         ${LATAM.map(c=>`<div class="prog-item ${S.loadProgress[c.code]||'loading'}" id="prog-${c.code}">${c.flag} ${c.name}</div>`).join('')}
       </div>
