@@ -353,16 +353,16 @@ tr{cursor:pointer}
 // CONSTANTS
 // ══════════════════════════════════════════════
 const LATAM = [
-  {flag:'🇧🇷',name:'Brazil',   code:'BR',size:800},
-  {flag:'🇦🇷',name:'Argentina',code:'AR',size:400},
-  {flag:'🇲🇽',name:'Mexico',   code:'MX',size:400},
-  {flag:'🇨🇱',name:'Chile',    code:'CL',size:300},
-  {flag:'🇨🇴',name:'Colombia', code:'CO',size:300},
-  {flag:'🇵🇪',name:'Peru',     code:'PE',size:250},
-  {flag:'🇺🇾',name:'Uruguay',  code:'UY',size:200},
-  {flag:'🇧🇴',name:'Bolivia',  code:'BO',size:150},
-  {flag:'🇵🇾',name:'Paraguay', code:'PY',size:150},
-  {flag:'🇪🇨',name:'Ecuador',  code:'EC',size:200},
+  {flag:'🇧🇷',name:'Brazil',   code:'BR',size:2000}, // > 1000 → pagination automatique
+  {flag:'🇦🇷',name:'Argentina',code:'AR',size:1000},
+  {flag:'🇲🇽',name:'Mexico',   code:'MX',size:1000},
+  {flag:'🇨🇱',name:'Chile',    code:'CL',size:1000},
+  {flag:'🇨🇴',name:'Colombia', code:'CO',size:1000},
+  {flag:'🇵🇪',name:'Peru',     code:'PE',size:1000},
+  {flag:'🇺🇾',name:'Uruguay',  code:'UY',size:500},
+  {flag:'🇧🇴',name:'Bolivia',  code:'BO',size:500},
+  {flag:'🇵🇾',name:'Paraguay', code:'PY',size:500},
+  {flag:'🇪🇨',name:'Ecuador',  code:'EC',size:500},
 ];
 
 const COUNTRY_MAP = Object.fromEntries(LATAM.map(c=>[c.name,c]));
@@ -520,59 +520,138 @@ function updateAssignedFilter(){
 // ══════════════════════════════════════════════
 const IS_LOCAL = window.location.protocol === 'file:';
 
-// ── BACKEND CONFIG ─────────────────────────────────────────
-// Set this to your Railway URL once deployed, e.g.:
-// const BACKEND_URL = "https://qima-server-production.up.railway.app";
+// ══════════════════════════════════════════════
+// API — tout passe par le serveur Railway
+// Plus de requêtes directes depuis le navigateur
+// ══════════════════════════════════════════════
+const IS_LOCAL   = window.location.protocol === 'file:';
+const PROXY      = 'https://corsproxy.io/?';
 const BACKEND_URL = localStorage.getItem('qima-backend') || null;
 
-async function fetchBEFromBackend() {
-  if (!BACKEND_URL) return [];
-  try {
-    const resp = await fetch(`${BACKEND_URL}/api/be-trials?country=all`, 
-      {signal: AbortSignal.timeout(30000)});
-    if (!resp.ok) return [];
-    const data = await resp.json();
-    return (data.data || []).map(s => ({
-      nctId:       s.id,
-      title:       s.title,
-      status:      s.status || 'UNKNOWN',
-      firstPosted: s.firstPosted || null,
-      lastUpdate:  null,
-      primEnd:     s.primEnd || null,
-      sponsor:     s.sponsor || '—',
-      studyType:   s.studyType || 'INTERVENTIONAL',
-      phases:      [],
-      phLbl:       s.phase || 'NA',
-      enrollment:  s.enrollment || null,
-      enrollType:  null,
-      conditions:  s.conditions || [],
-      allCountries:[s.country || 'Brazil'],
-      latamCountries: s.latamCountries || [s.country || 'Brazil'],
-      brSites:     0,
-      scope:       'national',
-      isBE:        true,
-      isEU:        false,
-      cro:         null,
-      area:        'be',
-      primaryCountry: s.country || 'Brazil',
-      source:      s.source || 'REBEC',
-    }));
-  } catch(e) {
-    console.warn('Backend BE fetch failed:', e.message);
-    return [];
-  }
+// Appel direct ClinicalTrials.gov (fallback si pas de backend)
+async function apiFetch(locn, extraParams={}, pageSize=1000){
+  const allStudies = [];
+  let nextToken = null;
+  let page = 0;
+  do {
+    const u = new URL('https://clinicaltrials.gov/api/v2/studies');
+    u.searchParams.set('query.locn', locn);
+    u.searchParams.set('pageSize', String(Math.min(pageSize, 1000)));
+    for(const [k,v] of Object.entries(extraParams)) u.searchParams.set(k,v);
+    if(nextToken) u.searchParams.set('pageToken', nextToken);
+    const url = IS_LOCAL ? PROXY+encodeURIComponent(u.toString()) : u.toString();
+    try {
+      const res = await fetch(url, {signal:AbortSignal.timeout(30000)});
+      if(!res.ok) break;
+      const data = await res.json();
+      allStudies.push(...(data.studies||[]));
+      nextToken = data.nextPageToken || null;
+      page++;
+      if(pageSize <= 1000) break;
+    } catch(e) { break; }
+  } while(nextToken && page < 5);
+  return allStudies;
 }
-const PROXY = 'https://corsproxy.io/?';
 
-async function apiFetch(locn, extraParams={}, pageSize=500){
-  const u = new URL('https://clinicaltrials.gov/api/v2/studies');
-  u.searchParams.set('query.locn', locn);
-  u.searchParams.set('pageSize', String(pageSize));
-  for(const [k,v] of Object.entries(extraParams)) u.searchParams.set(k,v);
-  const url = IS_LOCAL ? PROXY+encodeURIComponent(u.toString()) : u.toString();
-  const res = await fetch(url, {signal:AbortSignal.timeout(25000)});
-  if(!res.ok) throw new Error(`HTTP ${res.status}`);
-  return (await res.json()).studies || [];
+async function loadAll(){
+  S.loading=true; S.error=null; S.studies=[];
+  S.loadProgress = Object.fromEntries(LATAM.map(c=>[c.code,'loading']));
+  renderLoadingScreen();
+  const btn=document.getElementById('ref-btn');
+  btn.disabled=true; btn.textContent='Loading...';
+
+  const map = new Map();
+  const merge = (studies) => {
+    studies.forEach(s=>{
+      if(!s || !s.nctId) return;
+      if(!map.has(s.nctId)) { map.set(s.nctId,s); return; }
+      const ex = map.get(s.nctId);
+      (s.latamCountries||[]).forEach(c=>{ if(!ex.latamCountries.includes(c)) ex.latamCountries.push(c); });
+      if(s.isBE){ ex.isBE=true; ex.area='be'; }
+    });
+  };
+
+  if(BACKEND_URL){
+    // ── Mode backend : une seule requête, données stables depuis SQLite ──
+    try{
+      document.getElementById('tw').innerHTML=
+        '<div class="loading-wrap"><div class="spinner"></div>' +
+        '<div class="loading-title">Loading from QIMA server...</div>' +
+        '<div class="loading-sub">Stable data from database — updated nightly</div></div>';
+
+      const resp = await fetch(`${BACKEND_URL}/api/studies?per_page=5000`,
+        {signal: AbortSignal.timeout(30000)});
+      if(resp.ok){
+        const data = await resp.json();
+        const studies = (data.data||[]).map(s=>({
+          nctId:         s.id,
+          title:         s.title,
+          status:        s.status||'UNKNOWN',
+          firstPosted:   s.firstPosted||null,
+          lastUpdate:    null,
+          primEnd:       s.primEnd||null,
+          sponsor:       s.sponsor||'—',
+          studyType:     s.studyType||'N/A',
+          phases:        [],
+          phLbl:         s.phase||'NA',
+          enrollment:    s.enrollment||null,
+          enrollType:    null,
+          conditions:    s.conditions||[],
+          allCountries:  [s.country||'Brazil'],
+          latamCountries:s.latamCountries||[s.country||'Brazil'],
+          brSites:       0,
+          scope:         (s.latamCountries||[]).length > 1 ? 'international' : 'national',
+          isBE:          s.isBE||false,
+          isEU:          s.isEU||false,
+          cro:           s.cro||null,
+          area:          s.area||'outros',
+          primaryCountry:s.country||'Brazil',
+          source:        s.source||'ClinicalTrials.gov',
+        }));
+        studies.forEach(s=>{ if(s.nctId) map.set(s.nctId, s); });
+        // Mettre à jour la progression
+        LATAM.forEach(c=>{ S.loadProgress[c.code]='done'; });
+        renderLoadingScreen();
+        console.log(`Backend: ${studies.length} studies loaded from database`);
+      }
+    }catch(e){
+      console.warn('Backend failed, falling back to direct ClinicalTrials.gov:', e.message);
+    }
+  }
+
+  // Si pas de backend OU si backend a échoué → fallback direct ClinicalTrials.gov
+  if(map.size === 0){
+    const fetches = LATAM.map(async c=>{
+      try{
+        const raw = await apiFetch(c.name, {}, 2000);
+        merge(raw.map(s=>parseStudy(s, c.name)));
+        S.loadProgress[c.code]='done';
+      }catch{
+        S.loadProgress[c.code]='error';
+      }
+      renderLoadingScreen();
+    });
+    const beTerms = ['bioequivalence','bioequivalência'];
+    const beCountries = ['Brazil','Argentina','Mexico','Chile','Colombia','Peru'];
+    const beFetches = [];
+    for(const country of beCountries){
+      for(const term of beTerms){
+        beFetches.push(
+          apiFetch(country,{'query.term':term},1000)
+            .then(raw=>merge(raw.map(s=>parseStudy(s,country))))
+            .catch(()=>{})
+        );
+      }
+    }
+    await Promise.all([...fetches, ...beFetches]);
+  }
+
+  S.studies=[...map.values()].sort((a,b)=>new Date(b.firstPosted||0)-new Date(a.firstPosted||0));
+  S.loading=false;
+  document.getElementById('last-upd').textContent=
+    new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  btn.disabled=false; btn.textContent='↻ Refresh';
+  renderKPIs(); renderTabs(); renderCountryBar(); updateAssignedFilter(); render();
 }
 
 function parseStudy(raw, primaryCountry=''){
@@ -665,17 +744,19 @@ async function loadAll(){
     renderLoadingScreen();
   });
 
-  // Dedicated BE/BA searches per country — 'South America' not recognized by the API
-  const BE_TERMS = ['bioequivalence', 'bioavailability pharmacokinetic', 'BA BE generic drug'];
-  const BE_COUNTRIES = ['Brazil','Argentina','Mexico','Chile','Colombia','Peru','Uruguay'];
+  // Recherches BE ciblées — complètent les requêtes principales
+  // Pagesize 1000 pour récupérer le max, la déduplication par nctId évite les doublons
+  const BE_TERMS = ['bioequivalence', 'bioequivalência'];
+  const BE_COUNTRIES = ['Brazil','Argentina','Mexico','Chile','Colombia','Peru'];
   const beFetches = [];
   for(const country of BE_COUNTRIES){
     for(const term of BE_TERMS){
       beFetches.push(
-        apiFetch(country, {'query.term': term}, 300)
+        apiFetch(country, {'query.term': term}, 1000)
           .then(raw => merge(raw.map(s => {
             const p = parseStudy(s, country);
-            p.isBE = true; p.area = 'be'; return p;
+            if(p.isBE){ p.area = 'be'; }
+            return p;
           })))
           .catch(()=>{})
       );
