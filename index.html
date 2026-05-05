@@ -3,30 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QIMA Life Sciences · Prospection BA/BE + Clinical Trials Intelligence</title>
+<title>QIMA · Prospection BA/BE + Clinical Trials Intelligence</title>
 <style>
 :root{
-  --navy:#0c1f3d;--navy2:#1a3658;--navy3:#2a5080;
-  --green:#00956f;--green2:#00b886;--green-bg:#e6f7f2;--green-bd:#9de0cb;
-  --white:#fff;--bg:#eef2f7;--bg2:#f7f9fc;
-  --text:#0f1f35;--muted:#6b7a90;--border:rgba(15,31,61,.1);--border2:rgba(15,31,61,.18);
+  --navy:#0c1f3d;--navy2:#1a3658;--green:#00956f;--green2:#00b886;
+  --green-bg:#e6f7f2;--green-bd:#9de0cb;
+  --white:#fff;--bg:#eef2f7;--text:#0f1f35;--muted:#6b7a90;
+  --border:rgba(15,31,61,.1);--border2:rgba(15,31,61,.18);
   --shadow:0 1px 4px rgba(0,0,0,.08);--shadow2:0 4px 20px rgba(0,0,0,.1);
-  --r:10px;--rs:6px;--rl:14px;
-  --ff:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --r:10px;--rs:6px;--ff:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   --fm:'SF Mono','Fira Code',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh}
-
-/* ─── Header ─── */
-.app-hdr{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.2);position:sticky;top:0;z-index:50;gap:12px}
+.hdr{background:linear-gradient(135deg,var(--navy),var(--navy2));height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.2)}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.logo-txt .t1{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.3px;line-height:1}
-.logo-txt .t2{font-size:10px;color:rgba(255,255,255,.55);margin-top:2px;letter-spacing:.02em}
+.logo-sub{font-size:12px;color:rgba(255,255,255,.75);font-weight:500;white-space:nowrap}
 .hdr-mid{flex:1;max-width:380px}
 .hdr-mid input{width:100%;font-size:13px;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:var(--ff);outline:none}
 .hdr-mid input::placeholder{color:rgba(255,255,255,.45)}
-.hdr-mid input:focus{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4)}
 .hdr-r{display:flex;gap:8px;align-items:center;flex-shrink:0}
 .hdr-r button{font-family:var(--ff);font-size:12px;padding:7px 14px;border-radius:20px;cursor:pointer;transition:.15s;white-space:nowrap}
 .btn-ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff}
@@ -34,29 +29,18 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
 .btn-green{background:var(--green);border:1px solid var(--green2);color:#fff;font-weight:600}
 .btn-green:hover{background:var(--green2)}
 .btn-green:disabled{opacity:.5;cursor:default}
-
-/* ─── Content wrapper ─── */
 #app{max-width:1700px;margin:0 auto;padding:18px 22px}
-
-/* ─── KPI grid ─── */
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
-.kpi{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:16px 18px;box-shadow:var(--shadow)}
-.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.kpi-delta{font-size:11px;font-weight:600;padding:2px 7px;border-radius:99px}
-.kpi-v{font-size:28px;font-weight:700;line-height:1;margin-bottom:4px}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+.kpi{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:14px 18px;box-shadow:var(--shadow)}
+.kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:8px}
+.kpi-v{font-size:26px;font-weight:700;line-height:1;margin-bottom:4px}
 .kpi-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-
-/* ─── Area tabs ─── */
-.area-bar{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:10px 14px;display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;box-shadow:var(--shadow)}
+.area-bar{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:12px 16px;display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;box-shadow:var(--shadow)}
 .atab{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;cursor:pointer;font-size:12px;font-family:var(--ff);color:var(--muted);transition:.12s;white-space:nowrap}
-.atab:hover{border-color:var(--border2);color:var(--text)}
 .atab.on{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:500}
+.acount{font-size:10px;padding:1px 6px;border-radius:99px;background:rgba(0,0,0,.08);font-weight:600}
 .atab.on .acount{background:rgba(255,255,255,.2)}
-.acount{font-size:10px;padding:1px 6px;border-radius:99px;background:var(--bg);font-weight:600}
-
-/* ─── Filter bar ─── */
-.filter-bar{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;box-shadow:var(--shadow)}
+.filter-bar{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:10px 16px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:12px;box-shadow:var(--shadow)}
 .flbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
 .pill{font-size:12px;padding:5px 11px;border-radius:99px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-family:var(--ff);transition:.12s;white-space:nowrap}
 .pill:hover{border-color:var(--border2);color:var(--text)}
@@ -64,40 +48,27 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
 .vsep{width:1px;height:20px;background:var(--border);flex-shrink:0;margin:0 2px}
 .fsel{font-family:var(--ff);font-size:12px;padding:6px 10px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;outline:none}
 .cnt{font-size:11px;font-family:var(--fm);color:var(--muted);margin-left:auto}
-
-/* ─── Country filter pills ─── */
-.country-bar{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.cpill{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-family:var(--ff);transition:.12s;white-space:nowrap;display:flex;align-items:center;gap:4px}
-.cpill:hover{border-color:var(--border2)}
-.cpill.on{background:var(--navy2);color:#fff;border-color:var(--navy2);font-weight:500}
-
-/* ─── Main layout ─── */
 .main{display:grid;gap:14px}
 .main.solo{grid-template-columns:minmax(0,1fr)}
-.main.split{grid-template-columns:minmax(0,1fr) 345px}
-
-/* ─── Table ─── */
+.main.split{grid-template-columns:minmax(0,1fr) 330px}
 .tbl-card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
 .tbl-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:950px}
+table{width:100%;border-collapse:collapse;min-width:900px}
 thead tr{background:#f8fafc}
 th{padding:10px 12px;text-align:left;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);white-space:nowrap;user-select:none}
 th.sortable{cursor:pointer}
-th.sortable:hover,th.sorted{color:var(--text)}
+th.sorted{color:var(--text)}
 td{padding:10px 12px;border-bottom:1px solid #f0f4f8;vertical-align:middle;font-size:12px}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fafbfc}
 tr.sel td{background:#f0f7ff}
 tr{cursor:pointer}
-
-/* ─── Badges ─── */
-.badge{display:inline-flex;align-items:center;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:600;white-space:nowrap;line-height:1.7;gap:4px}
-.b-REC{background:#dcfce7;color:#15803d}
-.b-NYR{background:#dbeafe;color:#1d4ed8}
-.b-ACT{background:#fef9c3;color:#a16207}
-.b-COM{background:#f1f5f9;color:#475569}
-.b-TER{background:#fee2e2;color:#b91c1c}
-.b-SUS{background:#fce7f3;color:#9d174d}
+.badge{display:inline-flex;align-items:center;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:600;white-space:nowrap;line-height:1.7}
+.s-REC{background:#dcfce7;color:#15803d}
+.s-NYR{background:#dbeafe;color:#1d4ed8}
+.s-ACT{background:#fef9c3;color:#a16207}
+.s-COM{background:#f1f5f9;color:#475569}
+.s-TER{background:#fee2e2;color:#b91c1c}
 .ph-1{background:#dbeafe;color:#1e40af}
 .ph-2{background:#ede9fe;color:#5b21b6}
 .ph-3{background:#fef3c7;color:#b45309}
@@ -119,187 +90,118 @@ tr{cursor:pointer}
 .star-btn{background:none;border:none;cursor:pointer;font-size:15px;color:#cbd5e1;padding:0;line-height:1;transition:.12s}
 .star-btn.on{color:#f59e0b}
 .qs-sel{font-size:11px;padding:2px 7px;border-radius:99px;border:none;cursor:pointer;font-family:var(--ff);font-weight:600;outline:none;background:transparent}
-.flag-badges{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
-.flag-tag{font-size:12px;line-height:1}
-
-/* ─── Detail panel ─── */
-.panel{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:20px;position:sticky;top:78px;max-height:calc(100vh - 100px);overflow-y:auto;align-self:flex-start;box-shadow:var(--shadow2)}
-.panel-nct{font-family:var(--fm);font-size:11px;color:#1d4ed8;margin-bottom:6px}
-.panel-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:12px;color:var(--text)}
-.panel-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.panel{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:18px;position:sticky;top:78px;max-height:calc(100vh-100px);overflow-y:auto;align-self:flex-start;box-shadow:var(--shadow2)}
+.ptitle{font-size:13px;font-weight:600;line-height:1.4;margin:8px 0 12px}
 .dr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;gap:10px}
 .dl{color:var(--muted);flex-shrink:0}
-.dv{font-weight:500;text-align:right;word-break:break-word;max-width:195px}
-.ext-lnk{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--green);padding:9px;border:1px solid var(--green-bd);border-radius:var(--r);text-decoration:none;margin-top:14px;background:var(--green-bg);font-weight:600}
-.ext-lnk:hover{background:#d4f0e8}
-.slbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 7px;font-weight:600}
+.dv{font-weight:500;text-align:right;word-break:break-word;max-width:190px}
+.ext-lnk{display:block;text-align:center;font-size:12px;color:var(--green);padding:8px;border:1px solid var(--green-bd);border-radius:var(--r);text-decoration:none;margin-top:12px;background:var(--green-bg);font-weight:600}
+.slbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px;font-weight:600}
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:4px}
 .sbtn{padding:8px 4px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;cursor:pointer;font-size:11px;font-family:var(--ff);font-weight:600;color:var(--muted);transition:.12s;text-align:center}
-.sbtn:hover{border-color:var(--border2);color:var(--text)}
+.sbtn:hover{border-color:var(--border2)}
 .sbtn.act-new{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
 .sbtn.act-contacted{background:#fef9c3;color:#a16207;border-color:#fcd34d}
 .sbtn.act-proposal{background:#ede9fe;color:#5b21b6;border-color:#c4b5fd}
 .sbtn.act-won{background:#dcfce7;color:#15803d;border-color:#86efac}
 .sbtn.act-lost{background:#fee2e2;color:#b91c1c;border-color:#fca5a5}
 .nlst{display:flex;flex-direction:column;gap:5px;margin:6px 0;max-height:180px;overflow-y:auto}
-.note-item{background:#f8fafc;border-radius:var(--rs);border:1px solid var(--border);padding:8px 10px;font-size:12px;line-height:1.4}
-.note-meta{font-size:10px;color:var(--muted);font-family:var(--fm);margin-top:3px;display:flex;gap:8px}
+.note-item{background:#f8fafc;border-radius:var(--rs);padding:8px 10px;font-size:12px;line-height:1.4}
+.nd{font-size:10px;color:var(--muted);font-family:var(--fm);margin-top:3px}
 .ni-row{display:flex;gap:6px;margin-top:8px}
 .ni{flex:1;font-size:12px;padding:7px 11px;border:1px solid var(--border);border-radius:var(--rs);background:var(--white);color:var(--text);font-family:var(--ff);outline:none}
-.ni:focus{border-color:var(--navy2)}
-.panel-btn{font-family:var(--ff);font-size:12px;padding:7px 12px;border-radius:var(--rs);cursor:pointer;transition:.12s}
 .close-x{background:none;border:none;cursor:pointer;font-size:20px;color:var(--muted);padding:0;line-height:1}
-.close-x:hover{color:var(--text);background:transparent}
-.team-note{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--rs);padding:8px 11px;font-size:11px;color:#065f46;margin:4px 0;display:flex;align-items:center;gap:6px}
-.assign-row{display:flex;gap:8px;align-items:center;margin-top:6px}
-.assign-lbl{font-size:12px;color:var(--muted);flex-shrink:0}
-.assign-sel{flex:1;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:var(--rs);font-family:var(--ff);color:var(--text);background:var(--white);outline:none;cursor:pointer}
-.assign-sel:focus{border-color:var(--navy2)}
-
-/* ─── States ─── */
+.team-note{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--rs);padding:8px 11px;font-size:11px;color:#065f46;margin:4px 0}
+.assign-sel{width:100%;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:var(--rs);font-family:var(--ff);color:var(--text);background:var(--white);outline:none;cursor:pointer;margin-top:4px}
 .loading-wrap{display:flex;flex-direction:column;align-items:center;padding:56px 20px;gap:16px}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.progress-countries{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:400px}
-.prog-item{font-size:11px;padding:3px 8px;border-radius:99px;background:var(--bg);border:1px solid var(--border);color:var(--muted);transition:.3s}
-.prog-item.done{background:var(--green-bg);border-color:var(--green-bd);color:#065f46}
-.prog-item.loading{background:#fef3c7;border-color:#fcd34d;color:#a16207}
-.loading-title{font-size:14px;font-weight:600;color:var(--text)}
-.loading-sub{font-size:12px;color:var(--muted)}
-.err-box{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--r);padding:20px;color:#b91c1c;font-size:13px;margin:8px;line-height:1.6}
+.err-box{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--r);padding:20px;color:#b91c1c;font-size:13px;margin:12px;line-height:1.6}
 .err-box h4{font-size:14px;font-weight:600;margin-bottom:8px}
-.empty-msg{text-align:center;padding:40px;color:var(--muted);font-size:13px}
-
-/* ─── Modal ─── */
-.modal-bg{position:fixed;inset:0;background:rgba(12,31,61,.5);display:flex;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(4px)}
-.modal{background:var(--white);border-radius:var(--rl);padding:28px;width:520px;max-width:95vw;box-shadow:var(--shadow2)}
-.modal h3{font-size:17px;font-weight:700;margin-bottom:4px}
+.empty-msg{text-align:center;padding:32px;color:var(--muted);font-size:13px}
+.modal-bg{position:fixed;inset:0;background:rgba(12,31,61,.5);display:flex;align-items:center;justify-content:center;z-index:100}
+.modal{background:var(--white);border-radius:14px;padding:24px;width:500px;max-width:95vw;box-shadow:var(--shadow2)}
+.modal h3{font-size:16px;font-weight:700;margin-bottom:4px}
 .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
 .modal-tabs{display:flex;gap:2px;background:var(--bg);border-radius:var(--rs);padding:3px;margin-bottom:20px}
-.mtab{flex:1;padding:7px;border-radius:6px;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:var(--ff);color:var(--muted);transition:.12s;font-weight:500}
+.mtab{flex:1;padding:7px;border-radius:6px;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:var(--ff);color:var(--muted);font-weight:500}
 .mtab.on{background:var(--white);color:var(--text);box-shadow:var(--shadow)}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:11px;font-weight:600;margin-bottom:5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.field input,.field textarea{width:100%;font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:var(--ff);color:var(--text);background:var(--white);outline:none}
-.field input:focus,.field textarea:focus{border-color:var(--navy2)}
-.field textarea{resize:vertical;min-height:80px;font-size:12px}
+.field input{width:100%;font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:var(--ff);color:var(--text);background:var(--white);outline:none}
 .note-box{background:#f8fafc;border:1px solid var(--border);border-radius:var(--rs);padding:11px 13px;font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6}
 .note-box a{color:var(--green);font-weight:600;text-decoration:none}
-.note-box code{background:var(--bg);padding:1px 5px;border-radius:4px;font-family:var(--fm)}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
-.mbtn{font-family:var(--ff);font-size:13px;padding:8px 16px;border-radius:var(--rs);cursor:pointer;transition:.12s;border:1px solid var(--border)}
-.mbtn:hover{background:var(--bg)}
+.mbtn{font-family:var(--ff);font-size:13px;padding:8px 16px;border-radius:var(--rs);cursor:pointer;border:1px solid var(--border);background:var(--white)}
 .mbtn-primary{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
 .mbtn-primary:hover{background:var(--navy2)}
 .team-list{display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto;margin-bottom:10px}
-.team-row{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#f8fafc;border-radius:var(--rs);border:1px solid var(--border)}
+.team-row{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#f8fafc;border-radius:var(--rs)}
 .team-name{flex:1;font-size:13px}
-.team-del{background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted);padding:0;line-height:1}
+.team-del{background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted)}
 .team-add-row{display:flex;gap:6px}
-.team-add-row input{flex:1}
-
-/* ─── Misc ─── */
-@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.main.split{grid-template-columns:1fr}.panel{position:relative;top:0;max-height:none}}
+.team-add-row input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:var(--ff);outline:none}
 </style>
 </head>
 <body>
 
-<!-- ═══ Modal ═══ -->
+<!-- Settings Modal -->
 <div class="modal-bg" id="modal" style="display:none">
   <div class="modal">
     <h3>Settings</h3>
-    <div class="modal-sub">Configure team sharing and sales team members</div>
+    <div class="modal-sub">Configure team CRM and sales team</div>
     <div class="modal-tabs">
-      <button class="mtab on" onclick="switchMTab(this,'tab-crm')">Team CRM</button>
-      <button class="mtab" onclick="switchMTab(this,'tab-team')">Sales Team</button>
-      <button class="mtab" onclick="switchMTab(this,'tab-backend')">🔌 REBEC Server</button>
+      <button class="mtab on" onclick="switchTab(this,'tab-crm')">Team CRM</button>
+      <button class="mtab" onclick="switchTab(this,'tab-team')">Sales Team</button>
     </div>
-
-    <!-- Tab: CRM -->
     <div id="tab-crm">
-      <div class="note-box">
-        To sync CRM data (stages, notes, assignments) across your team in real time:<br><br>
-        1. Create a free account at <a href="https://jsonbin.io" target="_blank">jsonbin.io</a><br>
-        2. Go to <strong>API Keys</strong> → copy your <strong>X-Master-Key</strong><br>
-        3. Click <strong>New Bin</strong> → paste <code>{}</code> → copy the <strong>Bin ID</strong><br>
-        4. Paste both below → Save. Each teammate does this once.
-      </div>
+      <div class="note-box">To sync CRM data across your team, create a free account at <a href="https://jsonbin.io" target="_blank">jsonbin.io</a>, generate an API key and a Bin ID, and paste them below.</div>
       <div class="field"><label>X-Master-Key</label><input id="inp-key" type="text" placeholder="$2b$10$..."></div>
       <div class="field"><label>Bin ID</label><input id="inp-bin" type="text" placeholder="66ab1c2..."></div>
     </div>
-
-    <!-- Tab: Backend -->
-    <div id="tab-backend" style="display:none">
-      <div class="note-box">
-        Pour accéder aux données <strong>REBEC</strong> (Brésil), <strong>WHO ICTRP</strong> et autres registres LatAm,
-        déployez le serveur Python inclus sur <a href="https://railway.app" target="_blank">railway.app</a> (gratuit)
-        et collez son URL ci-dessous.<br><br>
-        Voir le fichier <code>README.md</code> du dossier <code>qima-server</code> pour les instructions.
-      </div>
-      <div class="field">
-        <label>URL du serveur Railway</label>
-        <input id="inp-backend" type="text" placeholder="https://qima-server-production.up.railway.app">
-      </div>
-      <div id="backend-status" style="font-size:12px;color:var(--muted);margin-top:8px"></div>
-    </div>
-
-    <!-- Tab: Team -->
     <div id="tab-team" style="display:none">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Add your sales team members. They will appear in the "Assign to" dropdown for each lead.</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Add your sales reps — they will appear in the "Assign to" dropdown.</div>
       <div class="team-list" id="team-list"></div>
-      <div class="team-add-row">
-        <input id="new-member" type="text" placeholder="Name / email" style="font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:var(--ff);outline:none;color:var(--text)">
-        <button class="mbtn mbtn-primary" onclick="addMember()">Add</button>
-      </div>
+      <div class="team-add-row"><input id="new-member" type="text" placeholder="Name or email"><button class="mbtn" onclick="addMember()">Add</button></div>
     </div>
-
     <div class="modal-btns">
       <button class="mbtn" onclick="closeModal()">Cancel</button>
-      <button class="mbtn mbtn-primary" onclick="saveSettings()">Save settings</button>
+      <button class="mbtn mbtn-primary" onclick="saveSettings()">Save</button>
     </div>
   </div>
 </div>
 
-<!-- ═══ App Header ═══ -->
-<header class="app-hdr">
+<!-- Header -->
+<header class="hdr">
   <div class="logo">
-    <div style="background:white;border-radius:8px;padding:5px 14px;display:flex;align-items:center"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjI1IiBoZWlnaHQ9IjkxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBvdmVyZmxvdz0iaGlkZGVuIj48ZGVmcz48Y2xpcFBhdGggaWQ9ImNsaXAwIj48cmVjdCB4PSI2NjkiIHk9IjQxNyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSI5MSIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJjbGlwMSI+PHJlY3QgeD0iNjY5IiB5PSI0MTciIHdpZHRoPSIyMjUiIGhlaWdodD0iOTEiLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iY2xpcDIiPjxyZWN0IHg9IjY3MCIgeT0iNDE4IiB3aWR0aD0iMjI0IiBoZWlnaHQ9Ijg5Ii8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImNsaXAzIj48cmVjdCB4PSI2NzAiIHk9IjQxOCIgd2lkdGg9IjIyNCIgaGVpZ2h0PSI4OSIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJjbGlwNCI+PHJlY3QgeD0iNjcwIiB5PSI0MTgiIHdpZHRoPSIyMjQiIGhlaWdodD0iODkiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNjY5IC00MTcpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDEpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDIpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDMpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDQpIj48cGF0aCBkPSJNNzQuNTQxMiA0LjU0OTQ0Qzc0LjU1NzQgMi40MTE2OSA3Ni4zMDMzIDAuNjkxNzY1IDc4LjQ0MTEgMC43MDc4NzMgODAuNTU2MSAwLjcyMzgwOCA4Mi4yNjY4IDIuNDM0NDQgODIuMjgyNyA0LjU0OTQ0TDgyLjI4MjcgNDEuNTU3NUM4Mi4yNjY1IDQzLjY5NTMgODAuNTIwNSA0NS40MTUyIDc4LjM4MjggNDUuMzk5MSA3Ni4yNjc4IDQ1LjM4MzIgNzQuNTU3MiA0My42NzI1IDc0LjU0MTIgNDEuNTU3NVoiIGZpbGw9IiNFNDAwMkIiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0xNzkuMTUyIDQwLjA0NjkgMTk1LjUxNSAzLjU0MjJDMTk2LjI4MyAxLjYxNDkzIDE5OC4xNjEgMC4zNjI0NzkgMjAwLjIzNiAwLjM5NTU1NiAyMDIuMzU3IDAuMzU2NDQ1IDIwNC4yOTUgMS41OTc5MyAyMDUuMTQ1IDMuNTQyMzFMMjIxLjUxIDQwLjA0N0MyMjEuNzY3IDQwLjU1NjggMjIxLjkxNyA0MS4xMTM2IDIyMS45NTEgNDEuNjgzMyAyMjEuOTk4IDQzLjY4NjQgMjIwLjQxMiA0NS4zNDg3IDIxOC40MDkgNDUuMzk2MiAyMTguMzczIDQ1LjM5NyAyMTguMzM3IDQ1LjM5NzQgMjE4LjMwMSA0NS4zOTcxIDIxNi42MDUgNDUuMzU2NCAyMTUuMTA3IDQ0LjI4MyAyMTQuNTI0IDQyLjY5MDhMMjEwLjkzNyAzNC40NDU2IDE4OS41MzcgMzQuNDQ1NiAxODUuODIzIDQyLjk0MjVDMTg1LjI1MiA0NC40MjQ4IDE4My44MjUgNDUuNDAxMSAxODIuMjM2IDQ1LjM5NzEgMTgwLjI3OCA0NS40MiAxNzguNjcxIDQzLjg1MDcgMTc4LjY0OCA0MS44OTIxIDE3OC42NDggNDEuODY0NiAxNzguNjQ4IDQxLjgzNyAxNzguNjQ4IDQxLjgwOTUgMTc4LjY4NSA0MS4xOTIxIDE3OC44NTYgNDAuNTkwMiAxNzkuMTUyIDQwLjA0NjlaTTIwNy45NzggMjcuNTg0OSAyMDAuMjM3IDkuNzczMyAxOTIuNDk1IDI3LjU4NDlaIiBmaWxsPSIjRTQwMDJCIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNNDguMTc2NSA0Mi43MTUxIDQyLjE0NTkgMzYuNjg0NUM0OS41OTc5IDI2LjIxNjIgNDcuMTUyNyAxMS42ODkgMzYuNjg0NSA0LjIzNjk4IDI2LjIxNjItMy4yMTUwMiAxMS42ODktMC43Njk4NjEgNC4yMzY5OCA5LjY5ODM5LTMuMjE1MDIgMjAuMTY2Ni0wLjc2OTg2NSAzNC42OTM4IDkuNjk4MzkgNDIuMTQ1OSAxNy43NzUxIDQ3Ljg5NTQgMjguNjA3OCA0Ny44OTU0IDM2LjY4NDUgNDIuMTQ1OUw0Mi43MTUxIDQ4LjE3NjVDNDQuMjQ1MiA0OS42NjIzIDQ2LjY5MDEgNDkuNjI2NCA0OC4xNzU5IDQ4LjA5NjMgNDkuNjMxIDQ2LjU5NzggNDkuNjMxIDQ0LjIxNCA0OC4xNzU5IDQyLjcxNTZaTTcuNzI0MzIgMjMuMjI5QzcuNzI0MzIgMTQuNjY1OSAxNC42NjYxIDcuNzI0MSAyMy4yMjkyIDcuNzI0MSAzMS43OTIzIDcuNzI0MSAzOC43MzQxIDE0LjY2NTkgMzguNzM0MSAyMy4yMjkgMzguNzM0MSAzMS43OTIxIDMxLjc5MjMgMzguNzMzOSAyMy4yMjkyIDM4LjczMzkgMjMuMjI5MSAzOC43MzM5IDIzLjIyOTEgMzguNzMzOSAyMy4yMjkgMzguNzMzOSAxNC42Njk5IDM4LjcyNDEgNy43MzQwMSAzMS43ODgxIDcuNzI0MzIgMjMuMjI5WiIgZmlsbD0iI0U0MDAyQiIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTExMS43NTUgNC42NzUyNUMxMTEuNzU1IDAuNDY0ODg4IDExNy42NjYtMC44NzQ1MDcgMTIwLjA2MyAyLjg1MDJMMTMzLjQwNyAyMy43NDU5IDE0Ni44MTMgMi43ODcxM0MxNDguOTQzLTAuODc3MzY0IDE1NS4wNTggMC40NDczMDcgMTU1LjA1OCA0LjY3NTI1TDE1NS4wNTggNDEuNTU3NUMxNTUuMDYzIDQzLjY3MjQgMTUzLjM1NSA0NS4zOTE2IDE1MS4yNCA0NS4zOTc2IDE1MS4yMTEgNDUuMzk3NyAxNTEuMTg0IDQ1LjM5NzUgMTUxLjE1NSA0NS4zOTY5IDE0OS4wNzMgNDUuMzU1NyAxNDcuNDE0IDQzLjY0MDUgMTQ3LjQ0MiA0MS41NTc1TDE0Ny40NDIgMTUuMjMzMkMxNDcuNDQyIDE1LjIzMzIgMTM4LjMyNCAyOC44MzMxIDEzNi42MTkgMzEuMjk4NiAxMzUuNTk5IDMzLjA3NDkgMTMzLjMzMiAzMy42ODc2IDEzMS41NTUgMzIuNjY2OCAxMzAuOTg2IDMyLjMzOTkgMTMwLjUxNCAzMS44Njc3IDEzMC4xODcgMzEuMjk4NkwxMTkuMzcyIDE1LjI0OSAxMTkuMzcyIDQxLjYyMDZDMTE5LjM4IDQzLjY5ODMgMTE3LjcwMiA0NS4zODkzIDExNS42MjQgNDUuMzk3NyAxMTUuNTkzIDQ1LjM5NzggMTE1LjU2MyA0NS4zOTc2IDExNS41MzIgNDUuMzk2OSAxMTMuNDg0IDQ1LjQzNDUgMTExLjc5MyA0My44MDQ2IDExMS43NTUgNDEuNzU2NSAxMTEuNzU1IDQxLjcxMTIgMTExLjc1NSA0MS42NjU4IDExMS43NTUgNDEuNjIwNloiIGZpbGw9IiNFNDAwMkIiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0wIDY2Ljg2NDZDLTAuMDAwOTYxMzUyIDY2LjE2OTYgMC41NTM2NDMgNjUuNjAxMyAxLjI0ODQyIDY1LjU4NTMgMS45NTQxMSA2NS41ODc3IDIuNTI1NTggNjYuMTU5MiAyLjUyNzkzIDY2Ljg2NDlMMi41Mjc5MyA4NS44MDQ1IDE0LjE0MTEgODUuODA0NUMxNC43ODQzIDg1LjgxNyAxNS4yOTc4IDg2LjM0NDggMTUuMjkyNSA4Ni45ODgyIDE1LjI5NTcgODcuNjIxNSAxNC43ODUgODguMTM3NSAxNC4xNTE3IDg4LjE0MDcgMTQuMTQ4MSA4OC4xNDA3IDE0LjE0NDYgODguMTQwNyAxNC4xNDExIDg4LjE0MDdMMS4yNDg0MiA4OC4xNDA3QzAuNTUzNTE0IDg4LjEyNDYtMC4wMDExNDA4OCA4Ny41NTYxLTUuMzY1MDZlLTA4IDg2Ljg2MVoiIGZpbGw9IiMxNDU2OTkiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0yMS4wNzg5IDY2LjQxNjVDMjEuMDg2NyA2NS42ODIzIDIxLjY4ODMgNjUuMDkzNCAyMi40MjI1IDY1LjEwMTIgMjIuNDU0NSA2NS4xMDE1IDIyLjQ4NjUgNjUuMTAzMSAyMi41MTgzIDY1LjEwNTcgMjMuMjU1IDY1LjAzMjcgMjMuOTExNCA2NS41NzA5IDIzLjk4NDMgNjYuMzA3NiAyMy45ODc5IDY2LjM0MzggMjMuOTkgNjYuMzgwMSAyMy45OTA3IDY2LjQxNjVMMjMuOTkwNyA2Ni44MzIzQzIzLjkwNzkgNjcuNjM2NCAyMy4xODkgNjguMjIxIDIyLjM4NDkgNjguMTM4MyAyMS42OTUyIDY4LjA2NzMgMjEuMTQ5OSA2Ny41MjIxIDIxLjA3ODkgNjYuODMyM1pNMjEuMzAzIDcyLjY4NzRDMjEuMzAwMSA3Mi4wMDk5IDIxLjg0MDYgNzEuNDU1IDIyLjUxOCA3MS40NDAyIDIzLjE5NjggNzEuNDI5NiAyMy43NTU3IDcxLjk3MTMgMjMuNzY2MyA3Mi42NTAxIDIzLjc2NjUgNzIuNjYyNiAyMy43NjY1IDcyLjY3NSAyMy43NjYzIDcyLjY4NzRMMjMuNzY2MyA4Ny4wNTI4QzIzLjc5MSA4Ny43MTY1IDIzLjI3MjggODguMjc0NyAyMi42MDkxIDg4LjI5OTMgMjIuNTg5NSA4OC4zMDAxIDIyLjU2OTggODguMzAwMyAyMi41NTAzIDg4LjMwMDEgMjEuODcxNSA4OC4zMTAyIDIxLjMxMzEgODcuNzY4MSAyMS4zMDMgODcuMDg5MiAyMS4zMDI4IDg3LjA3NzIgMjEuMzAyOCA4Ny4wNjUgMjEuMzAzIDg3LjA1MjhaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNMzIuMTEzOSA3My43NzUzIDMwLjc2OTcgNzMuNzc1M0MzMC4xODg3IDczLjc3NzYgMjkuNzE1OSA3My4zMDg1IDI5LjcxMzYgNzIuNzI3NiAyOS43MTM1IDcyLjcxNDIgMjkuNzEzNyA3Mi43MDA4IDI5LjcxNDEgNzIuNjg3NSAyOS43MTkgNzIuMTA2NSAzMC4xODg3IDcxLjYzNjggMzAuNzY5NyA3MS42MzJMMzIuMTEzOSA3MS42MzIgMzIuMTEzOSA3MC4xOTE4QzMyLjAwNzEgNjguNjM4MyAzMi41MjUzIDY3LjEwNjcgMzMuNTUzMyA2NS45MzcyIDM0LjUxNzEgNjUuMDUwOSAzNS43OTY5IDY0LjU4OTYgMzcuMTA0NSA2NC42NTc2IDM3Ljc2MDQgNjQuNjQ0NyAzOC40MTU1IDY0LjcwOSAzOS4wNTYzIDY0Ljg0OTMgMzkuNTY3NCA2NC45NDQzIDM5Ljk0MTcgNjUuMzg1MSAzOS45NTI0IDY1LjkwNDkgMzkuOTU0MyA2Ni40OTAxIDM5LjQ4MTQgNjYuOTY2IDM4Ljg5NjIgNjYuOTY3OCAzOC44NTM3IDY2Ljk2OCAzOC44MTEgNjYuOTY1NSAzOC43Njg3IDY2Ljk2MDUgMzguMzI1NSA2Ni44NzIzIDM3Ljg3NjEgNjYuODE5IDM3LjQyNDUgNjYuODAxMSAzNS41MDUxIDY2LjgwMTEgMzQuNTQ1NyA2Ny45NTI1IDM0LjU0NTcgNzAuMzJMMzQuNTQ1NyA3MS42NjQyIDM4LjgzMjYgNzEuNjY0MkMzOS40MTI4IDcxLjY0NDEgMzkuODk5NiA3Mi4wOTgxIDM5LjkxOTcgNzIuNjc4NCAzOS45MjAyIDcyLjY5MjIgMzkuOTIwNSA3Mi43MDYgMzkuOTIwMyA3Mi43MTk4IDM5LjkxMTcgNzMuMzExNSAzOS40MjQ5IDczLjc4NDEgMzguODMzMiA3My43NzUzIDM4LjgzMyA3My43NzUzIDM4LjgzMjggNzMuNzc1MyAzOC44MzI2IDczLjc3NTNMMzQuNTc3MyA3My43NzUzIDM0LjU3NzMgODcuMDUyOEMzNC41OTE2IDg3LjcyNzIgMzQuMDU2MyA4OC4yODU2IDMzLjM4MTkgODguMjk5OSAzMy4zNzUgODguMyAzMy4zNjgxIDg4LjMwMDEgMzMuMzYxMiA4OC4zMDAxIDMyLjY3MjcgODguMjk5MyAzMi4xMTQ3IDg3Ljc0MTIgMzIuMTEzOSA4Ny4wNTI4WiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTUxLjUyOTggODguNTI0MUM0Ni45ODkzIDg4LjU0NzYgNDMuMjg5NSA4NC44ODU5IDQzLjI2NiA4MC4zNDU0IDQzLjI2NTIgODAuMjAyOCA0My4yNjgyIDgwLjA2MDMgNDMuMjc0OSA3OS45MThMNDMuMjc0OSA3OS44NTQ1QzQzLjI3NDkgNzUuMDg3MiA0Ni42MzQzIDcxLjI0ODUgNTEuMjA5OSA3MS4yNDg1IDU2LjEwNDMgNzEuMjQ4NSA1OC44ODc2IDc1LjI0NjYgNTguODg3NiA3OS42MzA1IDU4Ljg5MDEgODAuMjYzOSA1OC4zNzg2IDgwLjc3OTQgNTcuNzQ1MiA4MC43ODE5IDU3Ljc0MjIgODAuNzgxOSA1Ny43MzkxIDgwLjc4MTkgNTcuNzM2MiA4MC43ODE5TDQ1Ljc3MDYgODAuNzgxOUM0NS44NjcgODMuOTIxIDQ4LjQ1MzcgODYuNDA3OCA1MS41OTQxIDg2LjM4MDYgNTMuMzczOCA4Ni4zOTM0IDU1LjA4NjggODUuNzAzOCA1Ni4zNjEzIDg0LjQ2MTMgNTYuNzg5NyA4NC4wNTk1IDU3LjQ2MjcgODQuMDgxIDU3Ljg2NDUgODQuNTA5NiA1OC4wNDc2IDg0LjcwNDcgNTguMTUwMyA4NC45NjE3IDU4LjE1MjMgODUuMjI5MiA1OC4xNDcgODUuNTM4OCA1OC4wMDcgODUuODMwNiA1Ny43Njg5IDg2LjAyODUgNTYuMTI2NCA4Ny42OTEzIDUzLjg2NiA4OC41OTU0IDUxLjUyOTggODguNTI0MVpNNTYuNDI0MiA3OC45NTg0QzU2LjE2ODkgNzUuOTUxMSA1NC40NDEzIDczLjMyNzIgNTEuMTQ1MyA3My4zMjcyIDQ4LjI2NjYgNzMuMzI3MiA0Ni4wOTA1IDc1LjcyNyA0NS43NzA1IDc4Ljk1ODRaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNNzUuODM2OCA4NS40NTMzQzc1LjUyNjMgODUuMjMzOCA3NS4zNDYxIDg0Ljg3MzcgNzUuMzU2NCA4NC40OTM2IDc1LjM0MjIgODMuODE4NCA3NS44NzgxIDgzLjI1OTYgNzYuNTUzMyA4My4yNDU0IDc2LjU1OTkgODMuMjQ1MyA3Ni41NjY0IDgzLjI0NTIgNzYuNTczIDgzLjI0NTIgNzYuODU2MiA4My4yNDA3IDc3LjEzMDcgODMuMzQzOSA3Ny4zNDEgODMuNTMzOSA3OS4yNzAzIDg1LjI5MjIgODEuODAxMiA4Ni4yNDI2IDg0LjQxMTEgODYuMTg4OSA4Ny40MTgzIDg2LjE4ODkgODkuNDAyNCA4NC41ODk0IDg5LjQwMjQgODIuMzgxNEw4OS40MDI0IDgyLjMxNzlDODkuNDAyNCA4MC4yMzggODguMjgyMiA3OS4wNTQ1IDgzLjU3OTYgNzguMDYyMiA3OC40Mjg5IDc2Ljk0MzEgNzYuMDYxNCA3NS4yNzg5IDc2LjA2MTQgNzEuNTk5Nkw3Ni4wNjE0IDcxLjUzNkM3Ni4wNjE0IDY4LjAxNiA3OS4xNjQ1IDY1LjQyNTUgODMuNDE5IDY1LjQyNTUgODUuOTc3NCA2NS4zNDEyIDg4LjQ4OTkgNjYuMTE4NCA5MC41NTM4IDY3LjYzMjYgOTAuODg2IDY3Ljg2OTYgOTEuMDg3NSA2OC4yNDg5IDkxLjA5NzggNjguNjU2OSA5MS4wOTc2IDY5LjMyOCA5MC41NTM0IDY5Ljg3MiA4OS44ODIzIDY5Ljg3MTkgODkuODgyMSA2OS44NzE5IDg5Ljg4MTkgNjkuODcxOSA4OS44ODE2IDY5Ljg3MTkgODkuNjE4IDY5Ljg4MTcgODkuMzU4OCA2OS44MDI4IDg5LjE0NTUgNjkuNjQ3OSA4Ny40ODc4IDY4LjM2ODMgODUuNDQ5MSA2Ny42ODExIDgzLjM1NSA2Ny42OTYxIDgwLjQ0MzMgNjcuNjk2MSA3OC41ODc3IDY5LjI5NjcgNzguNTg3NyA3MS4zMTJMNzguNTg3NyA3MS4zNzU4Qzc4LjU4NzcgNzMuNDg4IDc5Ljc0MDIgNzQuNjcyMSA4NC42NjY5IDc1LjcyNjkgODkuNjU4MiA3Ni44MTQ3IDkxLjk2MTEgNzguNjM4NiA5MS45NjExIDgyLjA2MTRMOTEuOTYxMSA4Mi4xMjZDOTEuOTYxMSA4NS45NjQ5IDg4Ljc2MiA4OC40NjA1IDg0LjMxNDYgODguNDYwNSA4MS4yMjIyIDg4LjQ5MTMgNzguMjE4NyA4Ny40MjU5IDc1LjgzNjggODUuNDUzM1oiIGZpbGw9IiMxNDU2OTkiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik05Ny4zNjI4IDc5Ljk1MDMgOTcuMzYyOCA3OS44ODU3Qzk3LjM0MDYgNzUuMTM3IDEwMS4xNzIgNzEuMjY5NCAxMDUuOTIxIDcxLjI0NzQgMTA4LjE1NyA3MS4yMzY5IDExMC4zMDggNzIuMDk3NyAxMTEuOTIgNzMuNjQ3MiAxMTIuMTY1IDczLjg2NzUgMTEyLjMwNSA3NC4xODE1IDExMi4zMDUgNzQuNTExIDExMi4zMDYgNzUuMTYzMSAxMTEuNzc5IDc1LjY5MzIgMTExLjEyNyA3NS42OTQ3IDExMS4xMjUgNzUuNjk0NyAxMTEuMTIzIDc1LjY5NDcgMTExLjEyMSA3NS42OTQ3IDExMC44MjkgNzUuNjkzIDExMC41NDcgNzUuNTkxNSAxMTAuMzIgNzUuNDA3MiAxMDkuMTQ0IDc0LjE2ODMgMTA3LjUxOCA3My40NTM2IDEwNS44MSA3My40MjMxIDEwMi40NCA3My41MjE2IDk5Ljc4ODEgNzYuMzMzMSA5OS44ODY2IDc5LjcwMjggOTkuODg3NyA3OS43NDI3IDk5Ljg4OTIgNzkuNzgyNSA5OS44OTEyIDc5LjgyMjJMOTkuODkxMiA3OS44ODU3Qzk5Ljc1MiA4My4yOTYgMTAyLjQwNCA4Ni4xNzM1IDEwNS44MTQgODYuMzEyNyAxMDUuODY2IDg2LjMxNDggMTA1LjkxNyA4Ni4zMTY0IDEwNS45NjkgODYuMzE3MSAxMDcuNzExIDg2LjI3ODcgMTA5LjM2NyA4NS41NTQgMTEwLjU3OCA4NC4zMDA4IDExMC43NTggODQuMTAxOSAxMTEuMDEyIDgzLjk4NjIgMTExLjI4MSA4My45ODA5IDExMS44OTEgODMuOTk5NyAxMTIuMzgyIDg0LjQ5MDQgMTEyLjQgODUuMTAxMSAxMTIuMzk3IDg1LjM4ODcgMTEyLjI4MiA4NS42NjM3IDExMi4wODEgODUuODY5MSAxMTAuNDcyIDg3LjU5OSAxMDguMjA0IDg4LjU2NDEgMTA1Ljg0MiA4OC41MjQxIDEwMS4xNTIgODguNTE3MiA5Ny4zNTU0IDg0LjcwOTUgOTcuMzYyNSA4MC4wMTk1IDk3LjM2MjUgNzkuOTk2NCA5Ny4zNjI2IDc5Ljk3MzQgOTcuMzYyOCA3OS45NTAzWiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTExOC4zNDYgNjYuNDE2NUMxMTguNDI5IDY1LjYxMjQgMTE5LjE0OSA2NS4wMjgyIDExOS45NTIgNjUuMTExNiAxMjAuNjQxIDY1LjE4MjkgMTIxLjE4NiA2NS43Mjc2IDEyMS4yNTggNjYuNDE2NUwxMjEuMjU4IDY2LjgzMjNDMTIxLjE3NSA2Ny42MzY0IDEyMC40NTcgNjguMjIxIDExOS42NTIgNjguMTM4MyAxMTguOTYyIDY4LjA2NzMgMTE4LjQxNyA2Ny41MjIxIDExOC4zNDYgNjYuODMyM1pNMTE4LjU3IDcyLjY4NzRDMTE4LjU2NyA3Mi4wMDk5IDExOS4xMDcgNzEuNDU1IDExOS43ODUgNzEuNDQwMiAxMjAuNDY0IDcxLjQyOTYgMTIxLjAyMiA3MS45NzEzIDEyMS4wMzMgNzIuNjUwMSAxMjEuMDMzIDcyLjY2MjYgMTIxLjAzMyA3Mi42NzUgMTIxLjAzMyA3Mi42ODc0TDEyMS4wMzMgODcuMDUyOEMxMjEuMDU4IDg3LjcxNjUgMTIwLjU0IDg4LjI3NDcgMTE5Ljg3NiA4OC4yOTkzIDExOS44NTcgODguMzAwMSAxMTkuODM3IDg4LjMwMDMgMTE5LjgxNyA4OC4zMDAxIDExOS4xMzggODguMzEwMiAxMTguNTggODcuNzY4MSAxMTguNTcgODcuMDg5MiAxMTguNTcgODcuMDc3MiAxMTguNTcgODcuMDY1IDExOC41NyA4Ny4wNTI4WiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTEzNS42ODMgODguNTI0MUMxMzEuMTQzIDg4LjU0NzQgMTI3LjQ0NCA4NC44ODU5IDEyNy40MjEgODAuMzQ1OCAxMjcuNDE5IDgwLjIwMzIgMTI3LjQyMyA4MC4wNjA1IDEyNy40MjkgNzkuOTE4TDEyNy40MjkgNzkuODU0NUMxMjcuNDI5IDc1LjA4NzIgMTMwLjc4OCA3MS4yNDg1IDEzNS4zNjMgNzEuMjQ4NSAxNDAuMjU4IDcxLjI0ODUgMTQzLjA0MiA3NS4yNDY2IDE0My4wNDIgNzkuNjMwNSAxNDMuMDQ0IDgwLjI2MzggMTQyLjUzMyA4MC43Nzk0IDE0MS45IDgwLjc4MTkgMTQxLjg5NyA4MC43ODE5IDE0MS44OTMgODAuNzgxOSAxNDEuODkgODAuNzgxOUwxMjkuOTI1IDgwLjc4MTlDMTMwLjAyMSA4My45MjA4IDEzMi42MDggODYuNDA3OSAxMzUuNzQ4IDg2LjM4MDYgMTM3LjUyNyA4Ni4zOTM2IDEzOS4yNCA4NS43MDM5IDE0MC41MTMgODQuNDYxMyAxNDAuOTQzIDg0LjA1OTMgMTQxLjYxNyA4NC4wODEgMTQyLjAxOSA4NC41MDk5IDE0Mi4yMDEgODQuNzA0OSAxNDIuMzA0IDg0Ljk2MTggMTQyLjMwNyA4NS4yMjkyIDE0Mi4zMDEgODUuNTM5IDE0Mi4xNiA4NS44MzEgMTQxLjkyMiA4Ni4wMjg1IDE0MC4yNzkgODcuNjkxNCAxMzguMDE5IDg4LjU5NTUgMTM1LjY4MyA4OC41MjQxWk0xNDAuNTc4IDc4Ljk1ODRDMTQwLjMyMiA3NS45NTExIDEzOC41OTQgNzMuMzI3MiAxMzUuMyA3My4zMjcyIDEzMi40MiA3My4zMjcyIDEzMC4yNDUgNzUuNzI3IDEyOS45MjUgNzguOTU4NFoiIGZpbGw9IiMxNDU2OTkiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0xNDkuMDg0IDcyLjY4NzRDMTQ5LjA4IDcyLjAwOTYgMTQ5LjYyMiA3MS40NTQ2IDE1MC4yOTkgNzEuNDQwMiAxNTAuOTc4IDcxLjQzMDEgMTUxLjUzNiA3MS45NzIyIDE1MS41NDYgNzIuNjUxIDE1MS41NDcgNzIuNjYzMSAxNTEuNTQ3IDcyLjY3NTIgMTUxLjU0NiA3Mi42ODc0TDE1MS41NDYgNzQuNDc5N0MxNTIuNjgxIDcyLjQyNzQgMTU0Ljg2NyA3MS4xODA0IDE1Ny4yMSA3MS4yNDg1IDE2MS4yMSA3MS4yNDg1IDE2My41NDUgNzMuOTM1OCAxNjMuNTQ1IDc3Ljg3MDVMMTYzLjU0NSA4Ny4wNTI4QzE2My41NTEgODcuNzMzIDE2My4wMDUgODguMjg5NiAxNjIuMzI1IDg4LjI5NiAxNjEuNjQ0IDg4LjMwMjUgMTYxLjA4OCA4Ny43NTYzIDE2MS4wODEgODcuMDc2MSAxNjEuMDgxIDg3LjA2ODMgMTYxLjA4MSA4Ny4wNjA2IDE2MS4wODEgODcuMDUyOEwxNjEuMDgxIDc4LjQ3OEMxNjEuMDgxIDc1LjQwNzIgMTU5LjQxNyA3My40ODc3IDE1Ni41MDYgNzMuNDg3NyAxNTMuODE4IDczLjQzMSAxNTEuNTk0IDc1LjU2MzQgMTUxLjUzNyA3OC4yNTA3IDE1MS41MzQgNzguMzkwOCAxNTEuNTM3IDc4LjUzMDkgMTUxLjU0NiA3OC42NzA3TDE1MS41NDYgODcuMDUyOEMxNTEuNTcxIDg3LjcxNjUgMTUxLjA1NCA4OC4yNzQ2IDE1MC4zOSA4OC4yOTkzIDE1MC4zNyA4OC4zMDAxIDE1MC4zNTEgODguMzAwMyAxNTAuMzMyIDg4LjMwMDEgMTQ5LjY1MyA4OC4zMTA2IDE0OS4wOTQgODcuNzY4NyAxNDkuMDg0IDg3LjA4OTkgMTQ5LjA4MyA4Ny4wNzc1IDE0OS4wODMgODcuMDY1MSAxNDkuMDg0IDg3LjA1MjhaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNMTY5LjQ1OCA3OS45NTAzIDE2OS40NTggNzkuODg1N0MxNjkuNDM2IDc1LjEzNyAxNzMuMjY4IDcxLjI2OTcgMTc4LjAxNiA3MS4yNDc3IDE4MC4yNTEgNzEuMjM3NCAxODIuNDA0IDcyLjA5OCAxODQuMDE1IDczLjY0NzIgMTg0LjI2MSA3My44NjcyIDE4NC40IDc0LjE4MTUgMTg0LjM5OSA3NC41MTEgMTg0LjQwMSA3NS4xNjMxIDE4My44NzQgNzUuNjkzMiAxODMuMjIxIDc1LjY5NDcgMTgzLjIxOSA3NS42OTQ3IDE4My4yMTggNzUuNjk0NyAxODMuMjE2IDc1LjY5NDcgMTgyLjkyNCA3NS42OTMgMTgyLjY0MSA3NS41OTE1IDE4Mi40MTYgNzUuNDA3MiAxODEuMjM4IDc0LjE2ODEgMTc5LjYxMyA3My40NTMzIDE3Ny45MDQgNzMuNDIzMSAxNzQuNTM0IDczLjUyMTUgMTcxLjg4MyA3Ni4zMzMgMTcxLjk4MSA3OS43MDI3IDE3MS45ODIgNzkuNzQyNiAxNzEuOTg0IDc5Ljc4MjUgMTcxLjk4NiA3OS44MjIyTDE3MS45ODYgNzkuODg1N0MxNzEuODQ3IDgzLjI5NjYgMTc0LjQ5OSA4Ni4xNzQxIDE3Ny45MTEgODYuMzEyNyAxNzcuOTYzIDg2LjMxNDkgMTc4LjAxMyA4Ni4zMTY0IDE3OC4wNjUgODYuMzE3MSAxNzkuODA2IDg2LjI3ODUgMTgxLjQ2MiA4NS41NTM4IDE4Mi42NzIgODQuMzAwOCAxODIuODUyIDg0LjEwMTkgMTgzLjEwNyA4My45ODYxIDE4My4zNzUgODMuOTgwOSAxODMuOTg2IDgzLjk5OTQgMTg0LjQ3NyA4NC40OTAzIDE4NC40OTYgODUuMTAxMSAxODQuNDkyIDg1LjM4ODcgMTg0LjM3NyA4NS42NjM3IDE4NC4xNzUgODUuODY5MSAxODIuNTY2IDg3LjU5OSAxODAuMjk5IDg4LjU2NDEgMTc3LjkzNyA4OC41MjQxIDE3My4yNDcgODguNTE2NiAxNjkuNDUgODQuNzA4MyAxNjkuNDU3IDgwLjAxNzkgMTY5LjQ1NyA3OS45OTU0IDE2OS40NTggNzkuOTcyOSAxNjkuNDU4IDc5Ljk1MDNaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNMTk3LjE5MiA4OC41MjQxQzE5Mi42NTIgODguNTQ3MSAxODguOTUyIDg0Ljg4NTEgMTg4LjkyOSA4MC4zNDQ3IDE4OC45MjggODAuMjAyNCAxODguOTMyIDgwLjA2MDEgMTg4LjkzOCA3OS45MThMMTg4LjkzOCA3OS44NTQ1QzE4OC45MzggNzUuMDg3MiAxOTIuMjk4IDcxLjI0ODUgMTk2Ljg3MiA3MS4yNDg1IDIwMS43NjcgNzEuMjQ4NSAyMDQuNTUxIDc1LjI0NjYgMjA0LjU1MSA3OS42MzA1IDIwNC41NTQgODAuMjYzOCAyMDQuMDQyIDgwLjc3OTQgMjAzLjQwOSA4MC43ODE5IDIwMy40MDYgODAuNzgxOSAyMDMuNDAyIDgwLjc4MTkgMjAzLjM5OSA4MC43ODE5TDE5MS40MzUgODAuNzgxOUMxOTEuNTMgODMuOTIwNyAxOTQuMTE3IDg2LjQwNzUgMTk3LjI1NyA4Ni4zODA2IDE5OS4wMzcgODYuMzkzNCAyMDAuNzUgODUuNzAzOCAyMDIuMDI1IDg0LjQ2MTMgMjAyLjQ1MyA4NC4wNTk1IDIwMy4xMjUgODQuMDgxIDIwMy41MjggODQuNTA5NiAyMDMuNzEgODQuNzA0NyAyMDMuODEzIDg0Ljk2MTcgMjAzLjgxNSA4NS4yMjkyIDIwMy44MSA4NS41MzkgMjAzLjY2OSA4NS44MzEgMjAzLjQzMSA4Ni4wMjg1IDIwMS43ODggODcuNjkxMyAxOTkuNTI4IDg4LjU5NTQgMTk3LjE5MiA4OC41MjQxWk0yMDIuMDg4IDc4Ljk1ODRDMjAxLjgzMSA3NS45NTExIDIwMC4xMDQgNzMuMzI3MiAxOTYuODA5IDczLjMyNzIgMTkzLjkzIDczLjMyNzIgMTkxLjc1NCA3NS43MjcgMTkxLjQzNSA3OC45NTg0WiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTIwOS42OTcgODYuMzgwNkMyMDkuNDE0IDg2LjE3MDEgMjA5LjI0OCA4NS44Mzc0IDIwOS4yNDkgODUuNDg0NSAyMDkuMjU5IDg0Ljg5MjcgMjA5Ljc0NiA4NC40MjAzIDIxMC4zMzcgODQuNDI5IDIxMC41NTUgODQuNDI0MSAyMTAuNzY4IDg0LjQ5MTQgMjEwLjk0NCA4NC42MjA4IDIxMi40NzUgODUuNzI3MSAyMTQuMzA1IDg2LjM0MSAyMTYuMTkyIDg2LjM4MDYgMjE4LjE3NSA4Ni4zODA2IDIxOS42MTYgODUuMzU3NSAyMTkuNjE2IDgzLjc1NjlMMjE5LjYxNiA4My42OTNDMjE5LjYxNiA4Mi4wMjg5IDIxNy42NjMgODEuMzg5MSAyMTUuNDg4IDgwLjc4MTIgMjEyLjg5NyA4MC4wNDU2IDIxMC4wMTcgNzkuMTQ5NSAyMTAuMDE3IDc2LjEwOThMMjEwLjAxNyA3Ni4wNDYzQzIxMC4wMTcgNzMuMTk4NCAyMTIuMzg1IDcxLjMxMTMgMjE1LjY0OCA3MS4zMTEzIDIxNy40OTUgNzEuMzUwOSAyMTkuMzA2IDcxLjgzMzcgMjIwLjkyOCA3Mi43MTkyIDIyMS4yOTcgNzIuOTI3OSAyMjEuNTI5IDczLjMxNzUgMjIxLjUzNSA3My43NDIzIDIyMS41MjUgNzQuMzM0MyAyMjEuMDM5IDc0LjgwNzIgMjIwLjQ0NyA3NC43OTkgMjIwLjI1OSA3NC43OTgxIDIyMC4wNzIgNzQuNzU0MyAyMTkuOTA0IDc0LjY3MDggMjE4LjU5NiA3My44ODI5IDIxNy4xMDkgNzMuNDQyNSAyMTUuNTg0IDczLjM5MTMgMjEzLjYzMiA3My4zOTEzIDIxMi4zODUgNzQuNDE0NCAyMTIuMzg1IDc1Ljc5TDIxMi4zODUgNzUuODU0NkMyMTIuMzg1IDc3LjQyMTggMjE0LjQzMyA3OC4wMzAxIDIxNi42MzkgNzguNzAxNCAyMTkuMTk5IDc5LjQ3IDIyMS45NTEgODAuNDYyNiAyMjEuOTUxIDgzLjQzNjlMMjIxLjk1MSA4My41MDE1QzIyMS45NTEgODYuNjM3IDIxOS4zNTkgODguNDYwNiAyMTYuMDY1IDg4LjQ2MDYgMjEzLjc4MiA4OC40MTc2IDIxMS41NjUgODcuNjkzMyAyMDkuNjk3IDg2LjM4MDZaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvc3ZnPg==" style="height:30px" alt="QIMA Life Sciences"></div>
-    <div class="logo-txt">
-      <div class="t2" style="font-size:12px;color:rgba(255,255,255,0.75);font-weight:500">Prospection BA/BE + Clinical Trials Intelligence</div>
-    </div>
+    <div style="background:white;border-radius:8px;padding:5px 14px;display:flex;align-items:center"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjI1IiBoZWlnaHQ9IjkxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBvdmVyZmxvdz0iaGlkZGVuIj48ZGVmcz48Y2xpcFBhdGggaWQ9ImNsaXAwIj48cmVjdCB4PSI2NjkiIHk9IjQxNyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSI5MSIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJjbGlwMSI+PHJlY3QgeD0iNjY5IiB5PSI0MTciIHdpZHRoPSIyMjUiIGhlaWdodD0iOTEiLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iY2xpcDIiPjxyZWN0IHg9IjY3MCIgeT0iNDE4IiB3aWR0aD0iMjI0IiBoZWlnaHQ9Ijg5Ii8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImNsaXAzIj48cmVjdCB4PSI2NzAiIHk9IjQxOCIgd2lkdGg9IjIyNCIgaGVpZ2h0PSI4OSIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJjbGlwNCI+PHJlY3QgeD0iNjcwIiB5PSI0MTgiIHdpZHRoPSIyMjQiIGhlaWdodD0iODkiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNjY5IC00MTcpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDEpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDIpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDMpIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDQpIj48cGF0aCBkPSJNNzQuNTQxMiA0LjU0OTQ0Qzc0LjU1NzQgMi40MTE2OSA3Ni4zMDMzIDAuNjkxNzY1IDc4LjQ0MTEgMC43MDc4NzMgODAuNTU2MSAwLjcyMzgwOCA4Mi4yNjY4IDIuNDM0NDQgODIuMjgyNyA0LjU0OTQ0TDgyLjI4MjcgNDEuNTU3NUM4Mi4yNjY1IDQzLjY5NTMgODAuNTIwNSA0NS40MTUyIDc4LjM4MjggNDUuMzk5MSA3Ni4yNjc4IDQ1LjM4MzIgNzQuNTU3MiA0My42NzI1IDc0LjU0MTIgNDEuNTU3NVoiIGZpbGw9IiNFNDAwMkIiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0xNzkuMTUyIDQwLjA0NjkgMTk1LjUxNSAzLjU0MjJDMTk2LjI4MyAxLjYxNDkzIDE5OC4xNjEgMC4zNjI0NzkgMjAwLjIzNiAwLjM5NTU1NiAyMDIuMzU3IDAuMzU2NDQ1IDIwNC4yOTUgMS41OTc5MyAyMDUuMTQ1IDMuNTQyMzFMMjIxLjUxIDQwLjA0N0MyMjEuNzY3IDQwLjU1NjggMjIxLjkxNyA0MS4xMTM2IDIyMS45NTEgNDEuNjgzMyAyMjEuOTk4IDQzLjY4NjQgMjIwLjQxMiA0NS4zNDg3IDIxOC40MDkgNDUuMzk2MiAyMTguMzczIDQ1LjM5NyAyMTguMzM3IDQ1LjM5NzQgMjE4LjMwMSA0NS4zOTcxIDIxNi42MDUgNDUuMzU2NCAyMTUuMTA3IDQ0LjI4MyAyMTQuNTI0IDQyLjY5MDhMMjEwLjkzNyAzNC40NDU2IDE4OS41MzcgMzQuNDQ1NiAxODUuODIzIDQyLjk0MjVDMTg1LjI1MiA0NC40MjQ4IDE4My44MjUgNDUuNDAxMSAxODIuMjM2IDQ1LjM5NzEgMTgwLjI3OCA0NS40MiAxNzguNjcxIDQzLjg1MDcgMTc4LjY0OCA0MS44OTIxIDE3OC42NDggNDEuODY0NiAxNzguNjQ4IDQxLjgzNyAxNzguNjQ4IDQxLjgwOTUgMTc4LjY4NSA0MS4xOTIxIDE3OC44NTYgNDAuNTkwMiAxNzkuMTUyIDQwLjA0NjlaTTIwNy45NzggMjcuNTg0OSAyMDAuMjM3IDkuNzczMyAxOTIuNDk1IDI3LjU4NDlaIiBmaWxsPSIjRTQwMDJCIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNNDguMTc2NSA0Mi43MTUxIDQyLjE0NTkgMzYuNjg0NUM0OS41OTc5IDI2LjIxNjIgNDcuMTUyNyAxMS42ODkgMzYuNjg0NSA0LjIzNjk4IDI2LjIxNjItMy4yMTUwMiAxMS42ODktMC43Njk4NjEgNC4yMzY5OCA5LjY5ODM5LTMuMjE1MDIgMjAuMTY2Ni0wLjc2OTg2NSAzNC42OTM4IDkuNjk4MzkgNDIuMTQ1OSAxNy43NzUxIDQ3Ljg5NTQgMjguNjA3OCA0Ny44OTU0IDM2LjY4NDUgNDIuMTQ1OUw0Mi43MTUxIDQ4LjE3NjVDNDQuMjQ1MiA0OS42NjIzIDQ2LjY5MDEgNDkuNjI2NCA0OC4xNzU5IDQ4LjA5NjMgNDkuNjMxIDQ2LjU5NzggNDkuNjMxIDQ0LjIxNCA0OC4xNzU5IDQyLjcxNTZaTTcuNzI0MzIgMjMuMjI5QzcuNzI0MzIgMTQuNjY1OSAxNC42NjYxIDcuNzI0MSAyMy4yMjkyIDcuNzI0MSAzMS43OTIzIDcuNzI0MSAzOC43MzQxIDE0LjY2NTkgMzguNzM0MSAyMy4yMjkgMzguNzM0MSAzMS43OTIxIDMxLjc5MjMgMzguNzMzOSAyMy4yMjkyIDM4LjczMzkgMjMuMjI5MSAzOC43MzM5IDIzLjIyOTEgMzguNzMzOSAyMy4yMjkgMzguNzMzOSAxNC42Njk5IDM4LjcyNDEgNy43MzQwMSAzMS43ODgxIDcuNzI0MzIgMjMuMjI5WiIgZmlsbD0iI0U0MDAyQiIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTExMS43NTUgNC42NzUyNUMxMTEuNzU1IDAuNDY0ODg4IDExNy42NjYtMC44NzQ1MDcgMTIwLjA2MyAyLjg1MDJMMTMzLjQwNyAyMy43NDU5IDE0Ni44MTMgMi43ODcxM0MxNDguOTQzLTAuODc3MzY0IDE1NS4wNTggMC40NDczMDcgMTU1LjA1OCA0LjY3NTI1TDE1NS4wNTggNDEuNTU3NUMxNTUuMDYzIDQzLjY3MjQgMTUzLjM1NSA0NS4zOTE2IDE1MS4yNCA0NS4zOTc2IDE1MS4yMTEgNDUuMzk3NyAxNTEuMTg0IDQ1LjM5NzUgMTUxLjE1NSA0NS4zOTY5IDE0OS4wNzMgNDUuMzU1NyAxNDcuNDE0IDQzLjY0MDUgMTQ3LjQ0MiA0MS41NTc1TDE0Ny40NDIgMTUuMjMzMkMxNDcuNDQyIDE1LjIzMzIgMTM4LjMyNCAyOC44MzMxIDEzNi42MTkgMzEuMjk4NiAxMzUuNTk5IDMzLjA3NDkgMTMzLjMzMiAzMy42ODc2IDEzMS41NTUgMzIuNjY2OCAxMzAuOTg2IDMyLjMzOTkgMTMwLjUxNCAzMS44Njc3IDEzMC4xODcgMzEuMjk4NkwxMTkuMzcyIDE1LjI0OSAxMTkuMzcyIDQxLjYyMDZDMTE5LjM4IDQzLjY5ODMgMTE3LjcwMiA0NS4zODkzIDExNS42MjQgNDUuMzk3NyAxMTUuNTkzIDQ1LjM5NzggMTE1LjU2MyA0NS4zOTc2IDExNS41MzIgNDUuMzk2OSAxMTMuNDg0IDQ1LjQzNDUgMTExLjc5MyA0My44MDQ2IDExMS43NTUgNDEuNzU2NSAxMTEuNzU1IDQxLjcxMTIgMTExLjc1NSA0MS42NjU4IDExMS43NTUgNDEuNjIwNloiIGZpbGw9IiNFNDAwMkIiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0wIDY2Ljg2NDZDLTAuMDAwOTYxMzUyIDY2LjE2OTYgMC41NTM2NDMgNjUuNjAxMyAxLjI0ODQyIDY1LjU4NTMgMS45NTQxMSA2NS41ODc3IDIuNTI1NTggNjYuMTU5MiAyLjUyNzkzIDY2Ljg2NDlMMi41Mjc5MyA4NS44MDQ1IDE0LjE0MTEgODUuODA0NUMxNC43ODQzIDg1LjgxNyAxNS4yOTc4IDg2LjM0NDggMTUuMjkyNSA4Ni45ODgyIDE1LjI5NTcgODcuNjIxNSAxNC43ODUgODguMTM3NSAxNC4xNTE3IDg4LjE0MDcgMTQuMTQ4MSA4OC4xNDA3IDE0LjE0NDYgODguMTQwNyAxNC4xNDExIDg4LjE0MDdMMS4yNDg0MiA4OC4xNDA3QzAuNTUzNTE0IDg4LjEyNDYtMC4wMDExNDA4OCA4Ny41NTYxLTUuMzY1MDZlLTA4IDg2Ljg2MVoiIGZpbGw9IiMxNDU2OTkiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0yMS4wNzg5IDY2LjQxNjVDMjEuMDg2NyA2NS42ODIzIDIxLjY4ODMgNjUuMDkzNCAyMi40MjI1IDY1LjEwMTIgMjIuNDU0NSA2NS4xMDE1IDIyLjQ4NjUgNjUuMTAzMSAyMi41MTgzIDY1LjEwNTcgMjMuMjU1IDY1LjAzMjcgMjMuOTExNCA2NS41NzA5IDIzLjk4NDMgNjYuMzA3NiAyMy45ODc5IDY2LjM0MzggMjMuOTkgNjYuMzgwMSAyMy45OTA3IDY2LjQxNjVMMjMuOTkwNyA2Ni44MzIzQzIzLjkwNzkgNjcuNjM2NCAyMy4xODkgNjguMjIxIDIyLjM4NDkgNjguMTM4MyAyMS42OTUyIDY4LjA2NzMgMjEuMTQ5OSA2Ny41MjIxIDIxLjA3ODkgNjYuODMyM1pNMjEuMzAzIDcyLjY4NzRDMjEuMzAwMSA3Mi4wMDk5IDIxLjg0MDYgNzEuNDU1IDIyLjUxOCA3MS40NDAyIDIzLjE5NjggNzEuNDI5NiAyMy43NTU3IDcxLjk3MTMgMjMuNzY2MyA3Mi42NTAxIDIzLjc2NjUgNzIuNjYyNiAyMy43NjY1IDcyLjY3NSAyMy43NjYzIDcyLjY4NzRMMjMuNzY2MyA4Ny4wNTI4QzIzLjc5MSA4Ny43MTY1IDIzLjI3MjggODguMjc0NyAyMi42MDkxIDg4LjI5OTMgMjIuNTg5NSA4OC4zMDAxIDIyLjU2OTggODguMzAwMyAyMi41NTAzIDg4LjMwMDEgMjEuODcxNSA4OC4zMTAyIDIxLjMxMzEgODcuNzY4MSAyMS4zMDMgODcuMDg5MiAyMS4zMDI4IDg3LjA3NzIgMjEuMzAyOCA4Ny4wNjUgMjEuMzAzIDg3LjA1MjhaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNMzIuMTEzOSA3My43NzUzIDMwLjc2OTcgNzMuNzc1M0MzMC4xODg3IDczLjc3NzYgMjkuNzE1OSA3My4zMDg1IDI5LjcxMzYgNzIuNzI3NiAyOS43MTM1IDcyLjcxNDIgMjkuNzEzNyA3Mi43MDA4IDI5LjcxNDEgNzIuNjg3NSAyOS43MTkgNzIuMTA2NSAzMC4xODg3IDcxLjYzNjggMzAuNzY5NyA3MS42MzJMMzIuMTEzOSA3MS42MzIgMzIuMTEzOSA3MC4xOTE4QzMyLjAwNzEgNjguNjM4MyAzMi41MjUzIDY3LjEwNjcgMzMuNTUzMyA2NS45MzcyIDM0LjUxNzEgNjUuMDUwOSAzNS43OTY5IDY0LjU4OTYgMzcuMTA0NSA2NC42NTc2IDM3Ljc2MDQgNjQuNjQ0NyAzOC40MTU1IDY0LjcwOSAzOS4wNTYzIDY0Ljg0OTMgMzkuNTY3NCA2NC45NDQzIDM5Ljk0MTcgNjUuMzg1MSAzOS45NTI0IDY1LjkwNDkgMzkuOTU0MyA2Ni40OTAxIDM5LjQ4MTQgNjYuOTY2IDM4Ljg5NjIgNjYuOTY3OCAzOC44NTM3IDY2Ljk2OCAzOC44MTEgNjYuOTY1NSAzOC43Njg3IDY2Ljk2MDUgMzguMzI1NSA2Ni44NzIzIDM3Ljg3NjEgNjYuODE5IDM3LjQyNDUgNjYuODAxMSAzNS41MDUxIDY2LjgwMTEgMzQuNTQ1NyA2Ny45NTI1IDM0LjU0NTcgNzAuMzJMMzQuNTQ1NyA3MS42NjQyIDM4LjgzMjYgNzEuNjY0MkMzOS40MTI4IDcxLjY0NDEgMzkuODk5NiA3Mi4wOTgxIDM5LjkxOTcgNzIuNjc4NCAzOS45MjAyIDcyLjY5MjIgMzkuOTIwNSA3Mi43MDYgMzkuOTIwMyA3Mi43MTk4IDM5LjkxMTcgNzMuMzExNSAzOS40MjQ5IDczLjc4NDEgMzguODMzMiA3My43NzUzIDM4LjgzMyA3My43NzUzIDM4LjgzMjggNzMuNzc1MyAzOC44MzI2IDczLjc3NTNMMzQuNTc3MyA3My43NzUzIDM0LjU3NzMgODcuMDUyOEMzNC41OTE2IDg3LjcyNzIgMzQuMDU2MyA4OC4yODU2IDMzLjM4MTkgODguMjk5OSAzMy4zNzUgODguMyAzMy4zNjgxIDg4LjMwMDEgMzMuMzYxMiA4OC4zMDAxIDMyLjY3MjcgODguMjk5MyAzMi4xMTQ3IDg3Ljc0MTIgMzIuMTEzOSA4Ny4wNTI4WiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTUxLjUyOTggODguNTI0MUM0Ni45ODkzIDg4LjU0NzYgNDMuMjg5NSA4NC44ODU5IDQzLjI2NiA4MC4zNDU0IDQzLjI2NTIgODAuMjAyOCA0My4yNjgyIDgwLjA2MDMgNDMuMjc0OSA3OS45MThMNDMuMjc0OSA3OS44NTQ1QzQzLjI3NDkgNzUuMDg3MiA0Ni42MzQzIDcxLjI0ODUgNTEuMjA5OSA3MS4yNDg1IDU2LjEwNDMgNzEuMjQ4NSA1OC44ODc2IDc1LjI0NjYgNTguODg3NiA3OS42MzA1IDU4Ljg5MDEgODAuMjYzOSA1OC4zNzg2IDgwLjc3OTQgNTcuNzQ1MiA4MC43ODE5IDU3Ljc0MjIgODAuNzgxOSA1Ny43MzkxIDgwLjc4MTkgNTcuNzM2MiA4MC43ODE5TDQ1Ljc3MDYgODAuNzgxOUM0NS44NjcgODMuOTIxIDQ4LjQ1MzcgODYuNDA3OCA1MS41OTQxIDg2LjM4MDYgNTMuMzczOCA4Ni4zOTM0IDU1LjA4NjggODUuNzAzOCA1Ni4zNjEzIDg0LjQ2MTMgNTYuNzg5NyA4NC4wNTk1IDU3LjQ2MjcgODQuMDgxIDU3Ljg2NDUgODQuNTA5NiA1OC4wNDc2IDg0LjcwNDcgNTguMTUwMyA4NC45NjE3IDU4LjE1MjMgODUuMjI5MiA1OC4xNDcgODUuNTM4OCA1OC4wMDcgODUuODMwNiA1Ny43Njg5IDg2LjAyODUgNTYuMTI2NCA4Ny42OTEzIDUzLjg2NiA4OC41OTU0IDUxLjUyOTggODguNTI0MVpNNTYuNDI0MiA3OC45NTg0QzU2LjE2ODkgNzUuOTUxMSA1NC40NDEzIDczLjMyNzIgNTEuMTQ1MyA3My4zMjcyIDQ4LjI2NjYgNzMuMzI3MiA0Ni4wOTA1IDc1LjcyNyA0NS43NzA1IDc4Ljk1ODRaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNNzUuODM2OCA4NS40NTMzQzc1LjUyNjMgODUuMjMzOCA3NS4zNDYxIDg0Ljg3MzcgNzUuMzU2NCA4NC40OTM2IDc1LjM0MjIgODMuODE4NCA3NS44NzgxIDgzLjI1OTYgNzYuNTUzMyA4My4yNDU0IDc2LjU1OTkgODMuMjQ1MyA3Ni41NjY0IDgzLjI0NTIgNzYuNTczIDgzLjI0NTIgNzYuODU2MiA4My4yNDA3IDc3LjEzMDcgODMuMzQzOSA3Ny4zNDEgODMuNTMzOSA3OS4yNzAzIDg1LjI5MjIgODEuODAxMiA4Ni4yNDI2IDg0LjQxMTEgODYuMTg4OSA4Ny40MTgzIDg2LjE4ODkgODkuNDAyNCA4NC41ODk0IDg5LjQwMjQgODIuMzgxNEw4OS40MDI0IDgyLjMxNzlDODkuNDAyNCA4MC4yMzggODguMjgyMiA3OS4wNTQ1IDgzLjU3OTYgNzguMDYyMiA3OC40Mjg5IDc2Ljk0MzEgNzYuMDYxNCA3NS4yNzg5IDc2LjA2MTQgNzEuNTk5Nkw3Ni4wNjE0IDcxLjUzNkM3Ni4wNjE0IDY4LjAxNiA3OS4xNjQ1IDY1LjQyNTUgODMuNDE5IDY1LjQyNTUgODUuOTc3NCA2NS4zNDEyIDg4LjQ4OTkgNjYuMTE4NCA5MC41NTM4IDY3LjYzMjYgOTAuODg2IDY3Ljg2OTYgOTEuMDg3NSA2OC4yNDg5IDkxLjA5NzggNjguNjU2OSA5MS4wOTc2IDY5LjMyOCA5MC41NTM0IDY5Ljg3MiA4OS44ODIzIDY5Ljg3MTkgODkuODgyMSA2OS44NzE5IDg5Ljg4MTkgNjkuODcxOSA4OS44ODE2IDY5Ljg3MTkgODkuNjE4IDY5Ljg4MTcgODkuMzU4OCA2OS44MDI4IDg5LjE0NTUgNjkuNjQ3OSA4Ny40ODc4IDY4LjM2ODMgODUuNDQ5MSA2Ny42ODExIDgzLjM1NSA2Ny42OTYxIDgwLjQ0MzMgNjcuNjk2MSA3OC41ODc3IDY5LjI5NjcgNzguNTg3NyA3MS4zMTJMNzguNTg3NyA3MS4zNzU4Qzc4LjU4NzcgNzMuNDg4IDc5Ljc0MDIgNzQuNjcyMSA4NC42NjY5IDc1LjcyNjkgODkuNjU4MiA3Ni44MTQ3IDkxLjk2MTEgNzguNjM4NiA5MS45NjExIDgyLjA2MTRMOTEuOTYxMSA4Mi4xMjZDOTEuOTYxMSA4NS45NjQ5IDg4Ljc2MiA4OC40NjA1IDg0LjMxNDYgODguNDYwNSA4MS4yMjIyIDg4LjQ5MTMgNzguMjE4NyA4Ny40MjU5IDc1LjgzNjggODUuNDUzM1oiIGZpbGw9IiMxNDU2OTkiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik05Ny4zNjI4IDc5Ljk1MDMgOTcuMzYyOCA3OS44ODU3Qzk3LjM0MDYgNzUuMTM3IDEwMS4xNzIgNzEuMjY5NCAxMDUuOTIxIDcxLjI0NzQgMTA4LjE1NyA3MS4yMzY5IDExMC4zMDggNzIuMDk3NyAxMTEuOTIgNzMuNjQ3MiAxMTIuMTY1IDczLjg2NzUgMTEyLjMwNSA3NC4xODE1IDExMi4zMDUgNzQuNTExIDExMi4zMDYgNzUuMTYzMSAxMTEuNzc5IDc1LjY5MzIgMTExLjEyNyA3NS42OTQ3IDExMS4xMjUgNzUuNjk0NyAxMTEuMTIzIDc1LjY5NDcgMTExLjEyMSA3NS42OTQ3IDExMC44MjkgNzUuNjkzIDExMC41NDcgNzUuNTkxNSAxMTAuMzIgNzUuNDA3MiAxMDkuMTQ0IDc0LjE2ODMgMTA3LjUxOCA3My40NTM2IDEwNS44MSA3My40MjMxIDEwMi40NCA3My41MjE2IDk5Ljc4ODEgNzYuMzMzMSA5OS44ODY2IDc5LjcwMjggOTkuODg3NyA3OS43NDI3IDk5Ljg4OTIgNzkuNzgyNSA5OS44OTEyIDc5LjgyMjJMOTkuODkxMiA3OS44ODU3Qzk5Ljc1MiA4My4yOTYgMTAyLjQwNCA4Ni4xNzM1IDEwNS44MTQgODYuMzEyNyAxMDUuODY2IDg2LjMxNDggMTA1LjkxNyA4Ni4zMTY0IDEwNS45NjkgODYuMzE3MSAxMDcuNzExIDg2LjI3ODcgMTA5LjM2NyA4NS41NTQgMTEwLjU3OCA4NC4zMDA4IDExMC43NTggODQuMTAxOSAxMTEuMDEyIDgzLjk4NjIgMTExLjI4MSA4My45ODA5IDExMS44OTEgODMuOTk5NyAxMTIuMzgyIDg0LjQ5MDQgMTEyLjQgODUuMTAxMSAxMTIuMzk3IDg1LjM4ODcgMTEyLjI4MiA4NS42NjM3IDExMi4wODEgODUuODY5MSAxMTAuNDcyIDg3LjU5OSAxMDguMjA0IDg4LjU2NDEgMTA1Ljg0MiA4OC41MjQxIDEwMS4xNTIgODguNTE3MiA5Ny4zNTU0IDg0LjcwOTUgOTcuMzYyNSA4MC4wMTk1IDk3LjM2MjUgNzkuOTk2NCA5Ny4zNjI2IDc5Ljk3MzQgOTcuMzYyOCA3OS45NTAzWiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTExOC4zNDYgNjYuNDE2NUMxMTguNDI5IDY1LjYxMjQgMTE5LjE0OSA2NS4wMjgyIDExOS45NTIgNjUuMTExNiAxMjAuNjQxIDY1LjE4MjkgMTIxLjE4NiA2NS43Mjc2IDEyMS4yNTggNjYuNDE2NUwxMjEuMjU4IDY2LjgzMjNDMTIxLjE3NSA2Ny42MzY0IDEyMC40NTcgNjguMjIxIDExOS42NTIgNjguMTM4MyAxMTguOTYyIDY4LjA2NzMgMTE4LjQxNyA2Ny41MjIxIDExOC4zNDYgNjYuODMyM1pNMTE4LjU3IDcyLjY4NzRDMTE4LjU2NyA3Mi4wMDk5IDExOS4xMDcgNzEuNDU1IDExOS43ODUgNzEuNDQwMiAxMjAuNDY0IDcxLjQyOTYgMTIxLjAyMiA3MS45NzEzIDEyMS4wMzMgNzIuNjUwMSAxMjEuMDMzIDcyLjY2MjYgMTIxLjAzMyA3Mi42NzUgMTIxLjAzMyA3Mi42ODc0TDEyMS4wMzMgODcuMDUyOEMxMjEuMDU4IDg3LjcxNjUgMTIwLjU0IDg4LjI3NDcgMTE5Ljg3NiA4OC4yOTkzIDExOS44NTcgODguMzAwMSAxMTkuODM3IDg4LjMwMDMgMTE5LjgxNyA4OC4zMDAxIDExOS4xMzggODguMzEwMiAxMTguNTggODcuNzY4MSAxMTguNTcgODcuMDg5MiAxMTguNTcgODcuMDc3MiAxMTguNTcgODcuMDY1IDExOC41NyA4Ny4wNTI4WiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTEzNS42ODMgODguNTI0MUMxMzEuMTQzIDg4LjU0NzQgMTI3LjQ0NCA4NC44ODU5IDEyNy40MjEgODAuMzQ1OCAxMjcuNDE5IDgwLjIwMzIgMTI3LjQyMyA4MC4wNjA1IDEyNy40MjkgNzkuOTE4TDEyNy40MjkgNzkuODU0NUMxMjcuNDI5IDc1LjA4NzIgMTMwLjc4OCA3MS4yNDg1IDEzNS4zNjMgNzEuMjQ4NSAxNDAuMjU4IDcxLjI0ODUgMTQzLjA0MiA3NS4yNDY2IDE0My4wNDIgNzkuNjMwNSAxNDMuMDQ0IDgwLjI2MzggMTQyLjUzMyA4MC43Nzk0IDE0MS45IDgwLjc4MTkgMTQxLjg5NyA4MC43ODE5IDE0MS44OTMgODAuNzgxOSAxNDEuODkgODAuNzgxOUwxMjkuOTI1IDgwLjc4MTlDMTMwLjAyMSA4My45MjA4IDEzMi42MDggODYuNDA3OSAxMzUuNzQ4IDg2LjM4MDYgMTM3LjUyNyA4Ni4zOTM2IDEzOS4yNCA4NS43MDM5IDE0MC41MTMgODQuNDYxMyAxNDAuOTQzIDg0LjA1OTMgMTQxLjYxNyA4NC4wODEgMTQyLjAxOSA4NC41MDk5IDE0Mi4yMDEgODQuNzA0OSAxNDIuMzA0IDg0Ljk2MTggMTQyLjMwNyA4NS4yMjkyIDE0Mi4zMDEgODUuNTM5IDE0Mi4xNiA4NS44MzEgMTQxLjkyMiA4Ni4wMjg1IDE0MC4yNzkgODcuNjkxNCAxMzguMDE5IDg4LjU5NTUgMTM1LjY4MyA4OC41MjQxWk0xNDAuNTc4IDc4Ljk1ODRDMTQwLjMyMiA3NS45NTExIDEzOC41OTQgNzMuMzI3MiAxMzUuMyA3My4zMjcyIDEzMi40MiA3My4zMjcyIDEzMC4yNDUgNzUuNzI3IDEyOS45MjUgNzguOTU4NFoiIGZpbGw9IiMxNDU2OTkiIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwOTIzIDAgMCAxIDY3MCA0MTguMjM4KSIvPjxwYXRoIGQ9Ik0xNDkuMDg0IDcyLjY4NzRDMTQ5LjA4IDcyLjAwOTYgMTQ5LjYyMiA3MS40NTQ2IDE1MC4yOTkgNzEuNDQwMiAxNTAuOTc4IDcxLjQzMDEgMTUxLjUzNiA3MS45NzIyIDE1MS41NDYgNzIuNjUxIDE1MS41NDcgNzIuNjYzMSAxNTEuNTQ3IDcyLjY3NTIgMTUxLjU0NiA3Mi42ODc0TDE1MS41NDYgNzQuNDc5N0MxNTIuNjgxIDcyLjQyNzQgMTU0Ljg2NyA3MS4xODA0IDE1Ny4yMSA3MS4yNDg1IDE2MS4yMSA3MS4yNDg1IDE2My41NDUgNzMuOTM1OCAxNjMuNTQ1IDc3Ljg3MDVMMTYzLjU0NSA4Ny4wNTI4QzE2My41NTEgODcuNzMzIDE2My4wMDUgODguMjg5NiAxNjIuMzI1IDg4LjI5NiAxNjEuNjQ0IDg4LjMwMjUgMTYxLjA4OCA4Ny43NTYzIDE2MS4wODEgODcuMDc2MSAxNjEuMDgxIDg3LjA2ODMgMTYxLjA4MSA4Ny4wNjA2IDE2MS4wODEgODcuMDUyOEwxNjEuMDgxIDc4LjQ3OEMxNjEuMDgxIDc1LjQwNzIgMTU5LjQxNyA3My40ODc3IDE1Ni41MDYgNzMuNDg3NyAxNTMuODE4IDczLjQzMSAxNTEuNTk0IDc1LjU2MzQgMTUxLjUzNyA3OC4yNTA3IDE1MS41MzQgNzguMzkwOCAxNTEuNTM3IDc4LjUzMDkgMTUxLjU0NiA3OC42NzA3TDE1MS41NDYgODcuMDUyOEMxNTEuNTcxIDg3LjcxNjUgMTUxLjA1NCA4OC4yNzQ2IDE1MC4zOSA4OC4yOTkzIDE1MC4zNyA4OC4zMDAxIDE1MC4zNTEgODguMzAwMyAxNTAuMzMyIDg4LjMwMDEgMTQ5LjY1MyA4OC4zMTA2IDE0OS4wOTQgODcuNzY4NyAxNDkuMDg0IDg3LjA4OTkgMTQ5LjA4MyA4Ny4wNzc1IDE0OS4wODMgODcuMDY1MSAxNDkuMDg0IDg3LjA1MjhaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNMTY5LjQ1OCA3OS45NTAzIDE2OS40NTggNzkuODg1N0MxNjkuNDM2IDc1LjEzNyAxNzMuMjY4IDcxLjI2OTcgMTc4LjAxNiA3MS4yNDc3IDE4MC4yNTEgNzEuMjM3NCAxODIuNDA0IDcyLjA5OCAxODQuMDE1IDczLjY0NzIgMTg0LjI2MSA3My44NjcyIDE4NC40IDc0LjE4MTUgMTg0LjM5OSA3NC41MTEgMTg0LjQwMSA3NS4xNjMxIDE4My44NzQgNzUuNjkzMiAxODMuMjIxIDc1LjY5NDcgMTgzLjIxOSA3NS42OTQ3IDE4My4yMTggNzUuNjk0NyAxODMuMjE2IDc1LjY5NDcgMTgyLjkyNCA3NS42OTMgMTgyLjY0MSA3NS41OTE1IDE4Mi40MTYgNzUuNDA3MiAxODEuMjM4IDc0LjE2ODEgMTc5LjYxMyA3My40NTMzIDE3Ny45MDQgNzMuNDIzMSAxNzQuNTM0IDczLjUyMTUgMTcxLjg4MyA3Ni4zMzMgMTcxLjk4MSA3OS43MDI3IDE3MS45ODIgNzkuNzQyNiAxNzEuOTg0IDc5Ljc4MjUgMTcxLjk4NiA3OS44MjIyTDE3MS45ODYgNzkuODg1N0MxNzEuODQ3IDgzLjI5NjYgMTc0LjQ5OSA4Ni4xNzQxIDE3Ny45MTEgODYuMzEyNyAxNzcuOTYzIDg2LjMxNDkgMTc4LjAxMyA4Ni4zMTY0IDE3OC4wNjUgODYuMzE3MSAxNzkuODA2IDg2LjI3ODUgMTgxLjQ2MiA4NS41NTM4IDE4Mi42NzIgODQuMzAwOCAxODIuODUyIDg0LjEwMTkgMTgzLjEwNyA4My45ODYxIDE4My4zNzUgODMuOTgwOSAxODMuOTg2IDgzLjk5OTQgMTg0LjQ3NyA4NC40OTAzIDE4NC40OTYgODUuMTAxMSAxODQuNDkyIDg1LjM4ODcgMTg0LjM3NyA4NS42NjM3IDE4NC4xNzUgODUuODY5MSAxODIuNTY2IDg3LjU5OSAxODAuMjk5IDg4LjU2NDEgMTc3LjkzNyA4OC41MjQxIDE3My4yNDcgODguNTE2NiAxNjkuNDUgODQuNzA4MyAxNjkuNDU3IDgwLjAxNzkgMTY5LjQ1NyA3OS45OTU0IDE2OS40NTggNzkuOTcyOSAxNjkuNDU4IDc5Ljk1MDNaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48cGF0aCBkPSJNMTk3LjE5MiA4OC41MjQxQzE5Mi42NTIgODguNTQ3MSAxODguOTUyIDg0Ljg4NTEgMTg4LjkyOSA4MC4zNDQ3IDE4OC45MjggODAuMjAyNCAxODguOTMyIDgwLjA2MDEgMTg4LjkzOCA3OS45MThMMTg4LjkzOCA3OS44NTQ1QzE4OC45MzggNzUuMDg3MiAxOTIuMjk4IDcxLjI0ODUgMTk2Ljg3MiA3MS4yNDg1IDIwMS43NjcgNzEuMjQ4NSAyMDQuNTUxIDc1LjI0NjYgMjA0LjU1MSA3OS42MzA1IDIwNC41NTQgODAuMjYzOCAyMDQuMDQyIDgwLjc3OTQgMjAzLjQwOSA4MC43ODE5IDIwMy40MDYgODAuNzgxOSAyMDMuNDAyIDgwLjc4MTkgMjAzLjM5OSA4MC43ODE5TDE5MS40MzUgODAuNzgxOUMxOTEuNTMgODMuOTIwNyAxOTQuMTE3IDg2LjQwNzUgMTk3LjI1NyA4Ni4zODA2IDE5OS4wMzcgODYuMzkzNCAyMDAuNzUgODUuNzAzOCAyMDIuMDI1IDg0LjQ2MTMgMjAyLjQ1MyA4NC4wNTk1IDIwMy4xMjUgODQuMDgxIDIwMy41MjggODQuNTA5NiAyMDMuNzEgODQuNzA0NyAyMDMuODEzIDg0Ljk2MTcgMjAzLjgxNSA4NS4yMjkyIDIwMy44MSA4NS41MzkgMjAzLjY2OSA4NS44MzEgMjAzLjQzMSA4Ni4wMjg1IDIwMS43ODggODcuNjkxMyAxOTkuNTI4IDg4LjU5NTQgMTk3LjE5MiA4OC41MjQxWk0yMDIuMDg4IDc4Ljk1ODRDMjAxLjgzMSA3NS45NTExIDIwMC4xMDQgNzMuMzI3MiAxOTYuODA5IDczLjMyNzIgMTkzLjkzIDczLjMyNzIgMTkxLjc1NCA3NS43MjcgMTkxLjQzNSA3OC45NTg0WiIgZmlsbD0iIzE0NTY5OSIgZmlsbC1ydWxlPSJub256ZXJvIiBmaWxsLW9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEuMDA5MjMgMCAwIDEgNjcwIDQxOC4yMzgpIi8+PHBhdGggZD0iTTIwOS42OTcgODYuMzgwNkMyMDkuNDE0IDg2LjE3MDEgMjA5LjI0OCA4NS44Mzc0IDIwOS4yNDkgODUuNDg0NSAyMDkuMjU5IDg0Ljg5MjcgMjA5Ljc0NiA4NC40MjAzIDIxMC4zMzcgODQuNDI5IDIxMC41NTUgODQuNDI0MSAyMTAuNzY4IDg0LjQ5MTQgMjEwLjk0NCA4NC42MjA4IDIxMi40NzUgODUuNzI3MSAyMTQuMzA1IDg2LjM0MSAyMTYuMTkyIDg2LjM4MDYgMjE4LjE3NSA4Ni4zODA2IDIxOS42MTYgODUuMzU3NSAyMTkuNjE2IDgzLjc1NjlMMjE5LjYxNiA4My42OTNDMjE5LjYxNiA4Mi4wMjg5IDIxNy42NjMgODEuMzg5MSAyMTUuNDg4IDgwLjc4MTIgMjEyLjg5NyA4MC4wNDU2IDIxMC4wMTcgNzkuMTQ5NSAyMTAuMDE3IDc2LjEwOThMMjEwLjAxNyA3Ni4wNDYzQzIxMC4wMTcgNzMuMTk4NCAyMTIuMzg1IDcxLjMxMTMgMjE1LjY0OCA3MS4zMTEzIDIxNy40OTUgNzEuMzUwOSAyMTkuMzA2IDcxLjgzMzcgMjIwLjkyOCA3Mi43MTkyIDIyMS4yOTcgNzIuOTI3OSAyMjEuNTI5IDczLjMxNzUgMjIxLjUzNSA3My43NDIzIDIyMS41MjUgNzQuMzM0MyAyMjEuMDM5IDc0LjgwNzIgMjIwLjQ0NyA3NC43OTkgMjIwLjI1OSA3NC43OTgxIDIyMC4wNzIgNzQuNzU0MyAyMTkuOTA0IDc0LjY3MDggMjE4LjU5NiA3My44ODI5IDIxNy4xMDkgNzMuNDQyNSAyMTUuNTg0IDczLjM5MTMgMjEzLjYzMiA3My4zOTEzIDIxMi4zODUgNzQuNDE0NCAyMTIuMzg1IDc1Ljc5TDIxMi4zODUgNzUuODU0NkMyMTIuMzg1IDc3LjQyMTggMjE0LjQzMyA3OC4wMzAxIDIxNi42MzkgNzguNzAxNCAyMTkuMTk5IDc5LjQ3IDIyMS45NTEgODAuNDYyNiAyMjEuOTUxIDgzLjQzNjlMMjIxLjk1MSA4My41MDE1QzIyMS45NTEgODYuNjM3IDIxOS4zNTkgODguNDYwNiAyMTYuMDY1IDg4LjQ2MDYgMjEzLjc4MiA4OC40MTc2IDIxMS41NjUgODcuNjkzMyAyMDkuNjk3IDg2LjM4MDZaIiBmaWxsPSIjMTQ1Njk5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGwtb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMDkyMyAwIDAgMSA2NzAgNDE4LjIzOCkiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvc3ZnPg==" style="height:28px" alt="QIMA Life Sciences"></div>
+    <div class="logo-sub">Prospection BA/BE + Clinical Trials Intelligence</div>
   </div>
-  <div class="hdr-mid">
-    <input id="srch" type="text" placeholder="Search sponsor, NCT ID, condition, CRO..." oninput="render()">
-  </div>
+  <div class="hdr-mid"><input id="srch" type="text" placeholder="Search sponsor, NCT ID, condition, CRO..." oninput="applyFiltersAndRender()"></div>
   <div class="hdr-r">
     <span id="last-upd" style="font-size:11px;color:rgba(255,255,255,.5);font-family:var(--fm)"></span>
     <button class="btn-ghost" onclick="openModal()">⚙ Settings</button>
-    <button class="btn-green" id="ref-btn" onclick="loadAll()">↻ Refresh</button>
+    <button class="btn-green" id="ref-btn" onclick="loadData()">↻ Refresh</button>
   </div>
 </header>
 
-<!-- ═══ Main App ═══ -->
 <div id="app">
-
-  <!-- KPI Cards -->
+  <!-- KPIs -->
   <div class="kpi-grid" id="kpis">
-    <div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:#dbeafe">🌎</div></div><div class="kpi-v">—</div><div class="kpi-l">Studies indexed</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:#dcfce7">✅</div></div><div class="kpi-v">—</div><div class="kpi-l">Recruiting now</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:#fef3c7">⚡</div></div><div class="kpi-v">—</div><div class="kpi-l">New this week</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:#fce7f3">🔬</div></div><div class="kpi-v">—</div><div class="kpi-l">Bioequivalence</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:#ede9fe">📊</div></div><div class="kpi-v">—</div><div class="kpi-l">Active pipeline</div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:#dbeafe">🌎</div><div class="kpi-v" id="k-total">—</div><div class="kpi-l">Studies indexed</div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:#dcfce7">✅</div><div class="kpi-v" id="k-rec">—</div><div class="kpi-l">Recruiting now</div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:#fef3c7">⚡</div><div class="kpi-v" id="k-new">—</div><div class="kpi-l">New this week</div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:#fce7f3">🔬</div><div class="kpi-v" id="k-be">—</div><div class="kpi-l">Bioequivalence</div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:#ede9fe">📊</div><div class="kpi-v" id="k-pip">—</div><div class="kpi-l">Active pipeline</div></div>
   </div>
 
   <!-- Area tabs -->
-  <div class="area-bar" id="area-tabs"><span style="font-size:12px;color:var(--muted)">Loading...</span></div>
+  <div class="area-bar" id="area-tabs"></div>
 
   <!-- Country filter -->
-  <div class="filter-bar" style="padding:10px 14px 10px">
-    <span class="flbl">Country:</span>
-    <div class="country-bar" id="country-bar"></div>
-  </div>
+  <div class="filter-bar"><span class="flbl">Country:</span><div id="country-bar" style="display:flex;gap:5px;flex-wrap:wrap"></div></div>
 
-  <!-- Main filters -->
+  <!-- Filters -->
   <div class="filter-bar">
     <span class="flbl">Status:</span>
     <button class="pill on" data-ft="status" data-fv="all" onclick="setF(this)">All</button>
@@ -319,12 +221,11 @@ tr{cursor:pointer}
     <button class="pill" data-ft="scope" data-fv="national" onclick="setF(this)">National</button>
     <button class="pill" data-ft="scope" data-fv="international" onclick="setF(this)">International</button>
     <div class="vsep"></div>
-    <span class="flbl">More:</span>
-    <button class="pill" id="toggle-eu" data-ft="eu" data-fv="off" onclick="toggleEU(this)">🇪🇺 EU Sponsor</button>
-    <button class="pill" id="toggle-cro" data-ft="cro" data-fv="off" onclick="toggleCRO(this)">Has CRO</button>
-    <button class="pill" id="toggle-new" data-ft="new" data-fv="off" onclick="toggleNew(this)">⚡ New this week</button>
+    <button class="pill" id="pill-eu" onclick="toggleEU()">🇪🇺 EU Sponsor</button>
+    <button class="pill" id="pill-cro" onclick="toggleCRO()">Has CRO</button>
+    <button class="pill" id="pill-new" onclick="toggleNew()">⚡ New this week</button>
     <div class="vsep"></div>
-    <select id="sf" class="fsel" onchange="render()">
+    <select id="sf" class="fsel" onchange="applyFiltersAndRender()">
       <option value="all">All pipeline</option>
       <option value="starred">★ Starred</option>
       <option value="new">New lead</option>
@@ -333,525 +234,423 @@ tr{cursor:pointer}
       <option value="won">Won</option>
       <option value="lost">Lost</option>
     </select>
-    <select id="assigned-f" class="fsel" onchange="render()">
-      <option value="all">All reps</option>
-    </select>
+    <select id="assigned-f" class="fsel" onchange="applyFiltersAndRender()"><option value="all">All reps</option></select>
     <span class="cnt" id="cnt"></span>
   </div>
 
-  <!-- Main grid: table + panel -->
+  <!-- Main -->
   <div class="main solo" id="mg">
-    <div class="tbl-card">
-      <div class="tbl-wrap" id="tw"><div class="loading-wrap"><div class="spinner"></div><div class="loading-title">Loading LatAm clinical trials...</div></div></div>
-    </div>
+    <div class="tbl-card"><div id="tw"><div class="loading-wrap"><div class="spinner"></div><div style="font-size:14px;font-weight:600">Loading QIMA server data...</div></div></div></div>
     <div class="panel" id="panel" style="display:none"></div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// CONSTANTS
-// ══════════════════════════════════════════════
-const LATAM = [
-  {flag:'🇧🇷',name:'Brazil',   code:'BR',size:2000}, // > 1000 → pagination automatique
-  {flag:'🇦🇷',name:'Argentina',code:'AR',size:1000},
-  {flag:'🇲🇽',name:'Mexico',   code:'MX',size:1000},
-  {flag:'🇨🇱',name:'Chile',    code:'CL',size:1000},
-  {flag:'🇨🇴',name:'Colombia', code:'CO',size:1000},
-  {flag:'🇵🇪',name:'Peru',     code:'PE',size:1000},
-  {flag:'🇺🇾',name:'Uruguay',  code:'UY',size:500},
-  {flag:'🇧🇴',name:'Bolivia',  code:'BO',size:500},
-  {flag:'🇵🇾',name:'Paraguay', code:'PY',size:500},
-  {flag:'🇪🇨',name:'Ecuador',  code:'EC',size:500},
-];
-
-const COUNTRY_MAP = Object.fromEntries(LATAM.map(c=>[c.name,c]));
-
-const STAGES = [
-  {id:'new',      label:'New lead'},
-  {id:'contacted',label:'Contacted'},
-  {id:'proposal', label:'Proposal sent'},
-  {id:'won',      label:'Won ✓'},
-  {id:'lost',     label:'Lost'},
-];
+// ── Constants ─────────────────────────────────────────────────
+const BACKEND = 'https://web-production-40cdb.up.railway.app';
 
 const AREAS = [
   {id:'all',      label:'All'},
-  {id:'onco',     label:'Oncology',          kw:/cancer|tumor|oncol|carcinom|lymphoma|leukemia|melanoma|sarcoma|myeloma|glioma|neoplasm|câncer|neoplasia/i},
-  {id:'cardio',   label:'Cardiometabolic',   kw:/cardiovascular|cardiac|heart failure|hypertension|cholesterol|lipid|atherosclerosis|coronary|myocardial|arrhythmia/i},
-  {id:'endocrino',label:'Endocrine/Diabetes',kw:/diabetes|insulin|obesity|endocrin|thyroid|metabolic|hypoglycemi|hyperglycemi/i},
-  {id:'neuro',    label:'Neurology',         kw:/neurolog|alzheimer|parkinson|multiple sclerosis|epilepsy|dementia|migraine|stroke|amyotrophic/i},
-  {id:'psiq',     label:'Psychiatry',        kw:/psychiatric|depression|anxiety|schizophrenia|bipolar|mood disorder|adhd|autism/i},
-  {id:'gastro',   label:'Gastro/Hepato',     kw:/gastro|hepatitis|liver|crohn|colitis|ibd|stomach|colon|pancrea|biliary|cirrhosis|nafld|nash/i},
-  {id:'resp',     label:'Respiratory',       kw:/respiratory|asthma|copd|pulmonary|lung|bronchial|pneumonia|pulmonary fibrosis/i},
-  {id:'infec',    label:'Infectious',        kw:/hiv|aids|tuberculosis|malaria|dengue|covid|sars|influenza|infection|infectious|zika|chagas/i},
-  {id:'vacinas',  label:'Vaccines',          kw:/vaccine|vaccination|immunization|immunogen/i},
-  {id:'be',       label:'Bioequivalence',    kw:/bioequivalence|bioequivalência|bioavailability|pharmacokinetic|generic drug/i},
-  {id:'outros',   label:'Other',             kw:null}
+  {id:'be',       label:'Bioequivalence',    kw:/bioequivalen|bioavailab|pharmacokineti|ba\/be/i},
+  {id:'onco',     label:'Oncology',          kw:/cancer|tumor|oncol|lymphoma|leukemia|sarcoma|neoplasm/i},
+  {id:'cardio',   label:'Cardiometabolic',   kw:/cardiovascular|cardiac|hypertension|coronary|myocardial/i},
+  {id:'endocrino',label:'Endocrine/Diabetes',kw:/diabetes|insulin|obesity|thyroid|metabolic/i},
+  {id:'neuro',    label:'Neurology',         kw:/neurolog|alzheimer|parkinson|epilepsy|dementia|stroke/i},
+  {id:'psiq',     label:'Psychiatry',        kw:/depression|anxiety|schizophrenia|bipolar|adhd/i},
+  {id:'gastro',   label:'Gastro/Hepato',     kw:/hepatitis|liver|crohn|colitis|cirrhosis|nash/i},
+  {id:'resp',     label:'Respiratory',       kw:/asthma|copd|pulmonary|lung|fibrosis/i},
+  {id:'infec',    label:'Infectious',        kw:/hiv|aids|tuberculosis|malaria|dengue|covid|zika/i},
+  {id:'vacinas',  label:'Vaccines',          kw:/vaccine|vaccination|immunization/i},
+  {id:'outros',   label:'Other',             kw:null},
 ];
 
-const SL = {RECRUITING:'Recruiting',NOT_YET_RECRUITING:'Not yet open',ACTIVE_NOT_RECRUITING:'Active (closed)',COMPLETED:'Completed',TERMINATED:'Terminated',WITHDRAWN:'Withdrawn',SUSPENDED:'Suspended'};
-const SC = {RECRUITING:'b-REC',NOT_YET_RECRUITING:'b-NYR',ACTIVE_NOT_RECRUITING:'b-ACT',COMPLETED:'b-COM',TERMINATED:'b-TER',WITHDRAWN:'b-TER',SUSPENDED:'b-SUS'};
+const LATAM = [
+  {flag:'🇧🇷',name:'Brazil'},   {flag:'🇦🇷',name:'Argentina'},
+  {flag:'🇲🇽',name:'Mexico'},   {flag:'🇨🇱',name:'Chile'},
+  {flag:'🇨🇴',name:'Colombia'}, {flag:'🇵🇪',name:'Peru'},
+  {flag:'🇺🇾',name:'Uruguay'},  {flag:'🇧🇴',name:'Bolivia'},
+  {flag:'🇵🇾',name:'Paraguay'}, {flag:'🇪🇨',name:'Ecuador'},
+];
 
-const EU_PHARMA = /roche|novartis|bayer|astrazeneca|sanofi|glaxosmithkline|gsk|ucb|boehringer|merck kgaa|servier|fresenius|almirall|ipsen|pierre fabre|norgine|recordati|zambon|menarini|chiesi|bracco|grünenthal|grunenthal|shire|daiichi sankyo europe|lundbeck|novo nordisk|leo pharma|ferring|stallergenes|haleon|genmab|bavarian nordic|seagen/i;
-const EU_SUFFIX = /\bGmbH\b|\bS\.A\.S\b|\bS\.A\b|\bAG\b|\bN\.V\b|\bS\.r\.l\b|\bAB\b|\bOY\b|\bA\/S\b|\bSE\b/;
+const STAGES = [
+  {id:'new',label:'New lead'},{id:'contacted',label:'Contacted'},
+  {id:'proposal',label:'Proposal sent'},{id:'won',label:'Won ✓'},{id:'lost',label:'Lost'},
+];
 
-const CROS_MAP = {
-  'IQVIA|Quintiles|IMS Health':'IQVIA',
-  'Syneos|INC Research':'Syneos Health',
-  'ICON plc|ICON Plc|ICON ClinicalResearch':'ICON plc',
-  'PAREXEL|Parexel':'PAREXEL',
-  'PPD |PPD,|PPD$|Pharmaceutical Product Dev':'PPD',
-  'Covance|Labcorp Drug':'Labcorp Drug Dev.',
-  'Medpace':'Medpace',
-  'PRA Health|PRA International':'PRA Health Sciences',
-  'Novatek':'Novatek',
-  'Clinipace':'Clinipace',
-  'WuXi|Wuxi':'WuXi AppTec',
-  'Worldwide Clinical':'Worldwide Clinical',
-  'Theorem Clinical':'Theorem Clinical',
-  'Premier Research':'Premier Research',
-  'PSI CRO':'PSI CRO',
-  'Iqvia':'IQVIA',
-};
+const SL = {RECRUITING:'Recruiting',NOT_YET_RECRUITING:'Not yet open',
+  ACTIVE_NOT_RECRUITING:'Active (closed)',COMPLETED:'Completed',
+  TERMINATED:'Terminated',WITHDRAWN:'Withdrawn',SUSPENDED:'Suspended'};
+const SC = {RECRUITING:'s-REC',NOT_YET_RECRUITING:'s-NYR',ACTIVE_NOT_RECRUITING:'s-ACT',
+  COMPLETED:'s-COM',TERMINATED:'s-TER',WITHDRAWN:'s-TER',SUSPENDED:'s-ACT'};
 
-function detectCRO(collaborators = [], sponsor = '') {
-  const text = [...collaborators, sponsor].join(' ');
-  for(const [pattern, label] of Object.entries(CROS_MAP)) {
-    if(new RegExp(pattern,'i').test(text)) return label;
-  }
-  return null;
-}
-function isEUSponsor(sponsor = '') {
-  return EU_PHARMA.test(sponsor) || EU_SUFFIX.test(sponsor);
-}
+// ── State ─────────────────────────────────────────────────────
+let ALL_STUDIES = [];
+let CRM = {};
+let TEAM = ['Nicolas Jonquet'];
+let CFG = {binId:'',apiKey:''};
+let SEL = null;
+let F = {status:'all',phase:'all',scope:'all',area:'all',country:'all',eu:false,cro:false,newOnly:false};
+let SORT = {by:'firstPosted',dir:'desc'};
 
-// ══════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════
-const S = {
-  studies:[], crm:{}, loading:true, error:null,
-  selId:null,
-  fStatus:'all', fPhase:'all', fScope:'all', fArea:'all',
-  fCountry:'all', fEU:false, fCRO:false, fNew:false,
-  sortBy:'firstPosted', sortDir:'desc',
-  loadProgress:{} // country -> 'loading'|'done'|'error'
-};
-
-// ══════════════════════════════════════════════
-// CONFIG & STORAGE
-// ══════════════════════════════════════════════
-let cfg  = JSON.parse(localStorage.getItem('qima-cfg')  || '{"binId":"","apiKey":""}');
-let team = JSON.parse(localStorage.getItem('qima-team') || '["Nicolas Jonquet"]');
-
-function switchMTab(btn, tabId) {
-  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  ['tab-crm','tab-team','tab-backend'].forEach(id=>{
-    document.getElementById(id).style.display = id===tabId?'block':'none';
-  });
-}
-function openModal(){
-  document.getElementById('inp-key').value = cfg.apiKey||'';
-  document.getElementById('inp-bin').value = cfg.binId||'';
-  renderTeamList();
-  const bk = document.getElementById('inp-backend');
-  if(bk) bk.value = localStorage.getItem('qima-backend') || '';
-  document.getElementById('modal').style.display='flex';
-}
-function closeModal(){ document.getElementById('modal').style.display='none'; }
-function saveSettings(){
-  cfg.apiKey = document.getElementById('inp-key').value.trim();
-  cfg.binId  = document.getElementById('inp-bin').value.trim();
-  localStorage.setItem('qima-cfg',  JSON.stringify(cfg));
-  localStorage.setItem('qima-team', JSON.stringify(team));
-  const newBackend = document.getElementById('inp-backend')?.value.trim().replace(/\/$/,'');
-  if(newBackend) localStorage.setItem('qima-backend', newBackend);
-  else localStorage.removeItem('qima-backend');
-  closeModal();
-  updateAssignedFilter();
-  loadCRM().then(()=>{renderKPIs();render();});
-}
-function renderTeamList(){
-  document.getElementById('team-list').innerHTML = team.map((m,i)=>
-    `<div class="team-row"><span class="team-name">${m}</span><button class="team-del" onclick="delMember(${i})">×</button></div>`
-  ).join('') || '<div style="font-size:12px;color:var(--muted);padding:4px 0">No team members yet.</div>';
-}
-function addMember(){
-  const inp = document.getElementById('new-member');
-  if(!inp.value.trim()) return;
-  team.push(inp.value.trim()); inp.value='';
-  renderTeamList();
-}
-function delMember(i){ team.splice(i,1); renderTeamList(); }
-
-async function loadCRM(){
-  if(cfg.binId && cfg.apiKey){
-    try{
+// ── CRM Storage ───────────────────────────────────────────────
+async function loadCRM() {
+  const cfg = JSON.parse(localStorage.getItem('qima-cfg')||'{"binId":"","apiKey":""}');
+  CFG = cfg;
+  if (cfg.binId && cfg.apiKey) {
+    try {
       const r = await fetch(`https://api.jsonbin.io/v3/b/${cfg.binId}/latest`,
         {headers:{'X-Master-Key':cfg.apiKey},signal:AbortSignal.timeout(8000)});
-      if(r.ok){ const d=await r.json(); S.crm=d.record||{}; return; }
-    }catch{}
+      if (r.ok) { CRM = (await r.json()).record || {}; return; }
+    } catch(e) {}
   }
-  try{ S.crm=JSON.parse(localStorage.getItem('qima-crm')||'{}'); }catch{ S.crm={}; }
-}
-async function saveCRM(){
-  if(cfg.binId && cfg.apiKey){
-    try{
-      await fetch(`https://api.jsonbin.io/v3/b/${cfg.binId}`,{
-        method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':cfg.apiKey},
-        body:JSON.stringify(S.crm),signal:AbortSignal.timeout(8000)
-      });
-      return;
-    }catch{}
-  }
-  localStorage.setItem('qima-crm',JSON.stringify(S.crm));
-}
-function updateAssignedFilter(){
-  const sel = document.getElementById('assigned-f');
-  if(!sel) return;
-  const cur = sel.value;
-  sel.innerHTML = '<option value="all">All reps</option>' +
-    team.map(m=>`<option value="${m}"${cur===m?' selected':''}>${m}</option>`).join('');
+  try { CRM = JSON.parse(localStorage.getItem('qima-crm')||'{}'); } catch(e) { CRM = {}; }
 }
 
-// ══════════════════════════════════════════════
-// API
-// ══════════════════════════════════════════════
-// ══════════════════════════════════════════════
-// API — tout passe par le serveur Railway
-// Plus de requêtes directes depuis le navigateur
-// ══════════════════════════════════════════════
-const IS_LOCAL   = window.location.protocol === 'file:';
-const PROXY      = 'https://corsproxy.io/?';
-const BACKEND_URL = localStorage.getItem('qima-backend') || 'https://web-production-40cdb.up.railway.app';
-
-// Appel direct ClinicalTrials.gov (fallback si pas de backend)
-async function apiFetch(locn, extraParams={}, pageSize=1000){
-  const allStudies = [];
-  let nextToken = null;
-  let page = 0;
-  do {
-    const u = new URL('https://clinicaltrials.gov/api/v2/studies');
-    u.searchParams.set('query.locn', locn);
-    u.searchParams.set('pageSize', String(Math.min(pageSize, 1000)));
-    for(const [k,v] of Object.entries(extraParams)) u.searchParams.set(k,v);
-    if(nextToken) u.searchParams.set('pageToken', nextToken);
-    const url = IS_LOCAL ? PROXY+encodeURIComponent(u.toString()) : u.toString();
+async function saveCRM() {
+  if (CFG.binId && CFG.apiKey) {
     try {
-      const res = await fetch(url, {signal:AbortSignal.timeout(30000)});
-      if(!res.ok) break;
-      const data = await res.json();
-      allStudies.push(...(data.studies||[]));
-      nextToken = data.nextPageToken || null;
-      page++;
-      if(pageSize <= 1000) break;
-    } catch(e) { break; }
-  } while(nextToken && page < 5);
-  return allStudies;
+      await fetch(`https://api.jsonbin.io/v3/b/${CFG.binId}`,
+        {method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':CFG.apiKey},
+        body:JSON.stringify(CRM),signal:AbortSignal.timeout(8000)});
+      return;
+    } catch(e) {}
+  }
+  localStorage.setItem('qima-crm', JSON.stringify(CRM));
 }
 
-async function loadAll(){
-  S.loading=true; S.error=null; S.studies=[];
-  const btn=document.getElementById('ref-btn');
-  btn.disabled=true; btn.textContent='Loading...';
-
-  // Show loading message
-  document.getElementById('tw').innerHTML=
+// ── Data Load ─────────────────────────────────────────────────
+async function loadData() {
+  document.getElementById('ref-btn').disabled = true;
+  document.getElementById('ref-btn').textContent = 'Loading...';
+  document.getElementById('tw').innerHTML =
     '<div class="loading-wrap"><div class="spinner"></div>' +
-    '<div class="loading-title">Loading from QIMA server...</div>' +
-    '<div class="loading-sub">Fetching stable data — updated nightly</div></div>';
+    '<div style="font-size:14px;font-weight:600">Loading from QIMA server...</div>' +
+    '<div style="font-size:12px;color:var(--muted)">Fetching ' + BACKEND + '</div></div>';
 
   try {
-    // ── Appel au serveur Railway ────────────────────────────────
-    const resp = await fetch(
-      `${BACKEND_URL}/api/studies?per_page=10000`,
-      {signal: AbortSignal.timeout(45000)}
-    );
+    const resp = await fetch(`${BACKEND}/api/studies?per_page=10000`,
+      {signal: AbortSignal.timeout(45000)});
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
 
-    if(!resp.ok) throw new Error(`Server returned HTTP ${resp.status}`);
+    const data = await resp.json();
+    const raw  = data.data || [];
 
-    const data   = await resp.json();
-    const raw    = data.data || [];
-    console.log(`Backend: ${raw.length} studies received (total: ${data.total})`);
+    ALL_STUDIES = raw.map(s => ({
+      id:            s.id || '',
+      title:         s.title || 'N/A',
+      status:        s.status || 'UNKNOWN',
+      phase:         s.phase || 'NA',
+      sponsor:       s.sponsor || '—',
+      country:       s.country || 'Brazil',
+      studyType:     s.studyType || 'N/A',
+      isBE:          Boolean(s.isBE),
+      isEU:          Boolean(s.isEU),
+      cro:           s.cro || null,
+      area:          s.area || 'outros',
+      conditions:    Array.isArray(s.conditions) ? s.conditions : [],
+      enrollment:    s.enrollment || null,
+      primEnd:       s.primEnd || null,
+      firstPosted:   s.firstPosted || null,
+      latamCountries:Array.isArray(s.latamCountries) && s.latamCountries.length
+                       ? s.latamCountries : [s.country || 'Brazil'],
+      scope:         (Array.isArray(s.latamCountries) && s.latamCountries.length > 1)
+                       ? 'international' : 'national',
+      source:        s.source || 'ClinicalTrials.gov',
+    })).filter(s => s.id);
 
-    // Convertir au format attendu par le frontend
-    const studies = raw.map(s => ({
-      nctId:          s.id || '',
-      title:          s.title || 'N/A',
-      status:         s.status || 'UNKNOWN',
-      firstPosted:    s.firstPosted || null,
-      lastUpdate:     null,
-      primEnd:        s.primEnd || null,
-      sponsor:        s.sponsor || '—',
-      studyType:      s.studyType || 'N/A',
-      phases:         [],
-      phLbl:          s.phase || 'NA',
-      enrollment:     s.enrollment || null,
-      enrollType:     null,
-      conditions:     Array.isArray(s.conditions) ? s.conditions : [],
-      allCountries:   [s.country || 'Brazil'],
-      latamCountries: Array.isArray(s.latamCountries) && s.latamCountries.length
-                        ? s.latamCountries : [s.country || 'Brazil'],
-      brSites:        0,
-      scope:          (Array.isArray(s.latamCountries) && s.latamCountries.length > 1)
-                        ? 'international' : 'national',
-      isBE:           Boolean(s.isBE),
-      isEU:           Boolean(s.isEU),
-      cro:            s.cro || null,
-      area:           s.area || 'outros',
-      primaryCountry: s.country || 'Brazil',
-      source:         s.source || 'ClinicalTrials.gov',
-    })).filter(s => s.nctId);  // garder seulement les études avec un ID
-
-    S.studies = studies.sort((a,b) =>
-      new Date(b.firstPosted||0) - new Date(a.firstPosted||0)
-    );
-    console.log(`Mapped ${S.studies.length} studies successfully`);
+    document.getElementById('last-upd').textContent =
+      new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 
   } catch(e) {
-    console.error('Backend error:', e.message);
-    S.error = e.message;
     document.getElementById('tw').innerHTML =
       `<div class="err-box"><h4>Connection error</h4>${e.message}<br><br>
-      Make sure the Railway server is running at:<br>
-      <code>${BACKEND_URL}</code></div>`;
+      Server: <code>${BACKEND}</code></div>`;
+    document.getElementById('ref-btn').disabled = false;
+    document.getElementById('ref-btn').textContent = '↻ Refresh';
+    return;
   }
 
-  // Toujours libérer le bouton et mettre à jour l'UI
-  S.loading=false;
-  btn.disabled=false; btn.textContent='↻ Refresh';
-  document.getElementById('last-upd').textContent =
-    new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-
-  if(S.studies.length > 0){
-    try { renderKPIs(); } catch(e){ console.error('renderKPIs error:', e); }
-    try { renderTabs(); } catch(e){ console.error('renderTabs error:', e); }
-    try { renderCountryBar(); } catch(e){ console.error('renderCountryBar error:', e); }
-    try { updateAssignedFilter(); } catch(e){ console.error('updateAssignedFilter error:', e); }
-    try { render(); } catch(e){ console.error('render error:', e); }
-  }
+  document.getElementById('ref-btn').disabled = false;
+  document.getElementById('ref-btn').textContent = '↻ Refresh';
+  updateKPIs();
+  buildAreaTabs();
+  buildCountryBar();
+  updateAssignedFilter();
+  applyFiltersAndRender();
 }
 
-function parseStudy(raw, primaryCountry=''){
-  const p  = raw.protocolSection||{};
-  const id = p.identificationModule||{};
-  const st = p.statusModule||{};
-  const sp = p.sponsorCollaboratorsModule||{};
-  const de = p.designModule||{};
-  const cl = p.contactsLocationsModule||{};
-  const co = (p.conditionsModule||{}).conditions||[];
-  const locs = cl.locations||[];
-  const collabs = (sp.collaborators||[]).map(c=>c.name||'');
-  const sponsorName = sp.leadSponsor?.name||'';
-  const allCountries = [...new Set(locs.map(l=>l.country).filter(Boolean))];
-  const latamCountries = allCountries.filter(c=>COUNTRY_MAP[c]);
-  const brSites = locs.filter(l=>l.country==='Brazil').length;
-  const phases = de.phases||[];
-  const txt = ((id.briefTitle||'')+' '+co.join(' ')).toLowerCase();
-  const isBE = /bioequivalence|bioequivalência|bioavailability/.test(txt);
-  const s = {
-    nctId:       id.nctId||'',
-    title:       id.briefTitle||'N/A',
-    status:      st.overallStatus||'UNKNOWN',
-    firstPosted: st.studyFirstSubmitDate||null,
-    lastUpdate:  st.lastUpdateSubmitDate||null,
-    primEnd:     st.primaryCompletionDateStruct?.date||st.completionDateStruct?.date||null,
-    sponsor:     sponsorName,
-    studyType:   de.studyType||'N/A',
-    phases,
-    phLbl:       phLbl(phases),
-    enrollment:  de.enrollmentInfo?.count||null,
-    enrollType:  de.enrollmentInfo?.type||null,
-    conditions:  co,
-    allCountries,
-    latamCountries,
-    brSites,
-    scope: allCountries.length<=1?'national':'international',
-    isBE,
-    isEU:   isEUSponsor(sponsorName),
-    cro:    detectCRO(collabs, sponsorName),
-    area:   'outros',
-    primaryCountry
-  };
-  s.area = isBE?'be':classifyArea(s);
-  return s;
+// ── KPIs ──────────────────────────────────────────────────────
+function updateKPIs() {
+  const s = ALL_STUDIES;
+  document.getElementById('k-total').textContent = s.length;
+  document.getElementById('k-rec').textContent   = s.filter(x => x.status==='RECRUITING').length;
+  document.getElementById('k-new').textContent   = s.filter(x => x.firstPosted && Date.now()-new Date(x.firstPosted)<7*864e5).length;
+  document.getElementById('k-be').textContent    = s.filter(x => x.isBE).length;
+  document.getElementById('k-pip').textContent   = s.filter(x => ['contacted','proposal'].includes(CRM[x.id]?.stage)).length;
 }
 
-function classifyArea(s){
-  const txt=(s.title+' '+s.conditions.join(' ')).toLowerCase();
-  for(const a of AREAS.slice(1,-1)){ if(a.kw&&a.kw.test(txt)) return a.id; }
-  return 'outros';
-}
-function phLbl(phases){
-  if(!phases||!phases.length) return 'NA';
-  const p=phases[0];
-  if(p.includes('4'))return'4';if(p.includes('3'))return'3';
-  if(p.includes('2'))return'2';if(p.includes('1'))return'1';
-  return 'NA';
-}
-
-function renderKPIs(){
-  const t   = S.studies.length;
-  const rec = S.studies.filter(s=>s.status==='RECRUITING').length;
-  const wk  = S.studies.filter(s=>s.firstPosted&&Date.now()-new Date(s.firstPosted)<7*864e5).length;
-  const be  = S.studies.filter(s=>s.isBE).length;
-  const pip = S.studies.filter(s=>['contacted','proposal'].includes(S.crm[s.nctId]?.stage)).length;
-  const icons=[['🌎','#dbeafe'],['✅','#dcfce7'],['⚡','#fef3c7'],['🔬','#fce7f3'],['📊','#ede9fe']];
-  const data=[{v:t,l:'Studies indexed'},{v:rec,l:'Recruiting now'},{v:wk,l:'New this week'},{v:be,l:'Bioequivalence'},{v:pip,l:'Active pipeline'}];
-  const el=document.getElementById('kpis');
-  if(el) el.innerHTML=data.map((k,i)=>
-    `<div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:${icons[i][1]}">${icons[i][0]}</div></div><div class="kpi-v">${k.v}</div><div class="kpi-l">${k.l}</div></div>`
-  ).join('');
-}
-
-function getAreaCounts(){
-  const c={};AREAS.forEach(a=>c[a.id]=0);c.all=S.studies.length;
-  S.studies.forEach(s=>{if(c[s.area]!==undefined)c[s.area]++;});
-  return c;
-}
-
-function renderTabs(){
-  const c=getAreaCounts();
-  const el=document.getElementById('area-tabs');
-  if(!el) return;
-  el.innerHTML=AREAS.map(a=>{
-    const n=c[a.id]||0;
-    if(a.id!=='all'&&n===0) return '';
-    return `<button class="atab${S.fArea===a.id?' on':''}" onclick="setArea('${a.id}')">${a.label}<span class="acount">${n}</span></button>`;
+// ── Area tabs ─────────────────────────────────────────────────
+function buildAreaTabs() {
+  const counts = {};
+  AREAS.forEach(a => counts[a.id] = 0);
+  counts.all = ALL_STUDIES.length;
+  ALL_STUDIES.forEach(s => { if (counts[s.area] !== undefined) counts[s.area]++; });
+  document.getElementById('area-tabs').innerHTML = AREAS.map(a => {
+    const n = counts[a.id] || 0;
+    if (a.id !== 'all' && n === 0) return '';
+    return `<button class="atab${F.area===a.id?' on':''}" onclick="setArea('${a.id}')">${a.label}<span class="acount">${n}</span></button>`;
   }).join('');
 }
 
-function renderCountryBar(){
-  const counts={};
-  LATAM.forEach(c=>counts[c.name]=0);
-  S.studies.forEach(s=>(s.latamCountries||[]).forEach(c=>{if(counts[c]!==undefined)counts[c]++;}));
-  const el=document.getElementById('country-bar');
-  if(!el) return;
-  el.innerHTML=
-    `<button class="cpill${S.fCountry==='all'?' on':''}" onclick="setCountry('all')">🌎 All <span style="font-size:10px;opacity:.7">${S.studies.length}</span></button>`+
-    LATAM.filter(c=>counts[c.name]>0).map(c=>
-      `<button class="cpill${S.fCountry===c.name?' on':''}" onclick="setCountry('${c.name}')">${c.flag} ${c.name} <span style="font-size:10px;opacity:.7">${counts[c.name]}</span></button>`
+// ── Country bar ───────────────────────────────────────────────
+function buildCountryBar() {
+  const counts = {};
+  LATAM.forEach(c => counts[c.name] = 0);
+  ALL_STUDIES.forEach(s => (s.latamCountries||[]).forEach(c => { if (counts[c] !== undefined) counts[c]++; }));
+  document.getElementById('country-bar').innerHTML =
+    `<button class="cpill${F.country==='all'?' on':''}" onclick="setCountry('all')" style="font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:${F.country==='all'?'var(--navy)':'transparent'};color:${F.country==='all'?'#fff':'var(--muted)'};cursor:pointer;white-space:nowrap">🌎 All (${ALL_STUDIES.length})</button>` +
+    LATAM.filter(c => counts[c.name] > 0).map(c =>
+      `<button class="cpill" onclick="setCountry('${c.name}')" style="font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:${F.country===c.name?'var(--navy2)':'transparent'};color:${F.country===c.name?'#fff':'var(--muted)'};cursor:pointer;white-space:nowrap">${c.flag} ${c.name} (${counts[c.name]})</button>`
     ).join('');
 }
 
-
-function render(){
-  if(S.loading) return;
-  renderTabs(); renderCountryBar();
-  const mg=document.getElementById('mg'),panel=document.getElementById('panel');
-  if(S.selId){mg.className='main split';panel.style.display='';renderPanel();}
-  else{mg.className='main solo';panel.style.display='none';}
-  document.getElementById('tw').innerHTML=renderTable();
+// ── Filtering ─────────────────────────────────────────────────
+function getFiltered() {
+  const q  = (document.getElementById('srch')?.value||'').toLowerCase();
+  const sf = document.getElementById('sf')?.value||'all';
+  const af = document.getElementById('assigned-f')?.value||'all';
+  return ALL_STUDIES.filter(s => {
+    if (F.area    !== 'all' && s.area   !== F.area)   return false;
+    if (F.status  !== 'all' && s.status !== F.status) return false;
+    if (F.phase   !== 'all' && s.phase  !== F.phase)  return false;
+    if (F.scope   !== 'all' && s.scope  !== F.scope)  return false;
+    if (F.country !== 'all' && !((s.latamCountries||[]).includes(F.country))) return false;
+    if (F.eu  && !s.isEU) return false;
+    if (F.cro && !s.cro)  return false;
+    if (F.newOnly && !(s.firstPosted && Date.now()-new Date(s.firstPosted)<7*864e5)) return false;
+    const crm = CRM[s.id]||{};
+    if (sf === 'starred')  { if (!crm.starred) return false; }
+    else if (sf !== 'all') { if ((crm.stage||'new') !== sf) return false; }
+    if (af !== 'all' && crm.assignedTo !== af) return false;
+    if (q) return s.title.toLowerCase().includes(q)||s.sponsor.toLowerCase().includes(q)||
+                   s.id.toLowerCase().includes(q)||(s.cro||'').toLowerCase().includes(q)||
+                   (s.conditions||[]).some(c=>c.toLowerCase().includes(q));
+    return true;
+  }).sort((a,b) => {
+    let va, vb;
+    if (SORT.by === 'patients') { va = a.enrollment||0; vb = b.enrollment||0; }
+    else if (SORT.by === 'endDate') { va = new Date(a.primEnd||0); vb = new Date(b.primEnd||0); }
+    else { va = new Date(a.firstPosted||0); vb = new Date(b.firstPosted||0); }
+    return SORT.dir === 'desc' ? (vb > va ? 1 : -1) : (va > vb ? 1 : -1);
+  });
 }
 
-function renderPanel(){
-  const panel=document.getElementById('panel');
-  const s=S.studies.find(x=>x.nctId===S.selId);
-  if(!s){panel.style.display='none';return;}
-  const crm=S.crm[s.nctId]||{stage:'new',notes:[],starred:false};
-  const area=AREAS.find(a=>a.id===s.area)||AREAS[AREAS.length-1];
-  const flags=s.latamCountries.map(c=>COUNTRY_MAP[c]?.flag||'').join(' ');
-  panel.innerHTML=`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-      <a class="nct-a" href="https://clinicaltrials.gov/study/${s.nctId}" target="_blank" style="font-size:12px">${s.nctId} ↗</a>
-      <button class="close-x" onclick="closePnl()">×</button>
+// ── Render table ──────────────────────────────────────────────
+function applyFiltersAndRender() {
+  buildAreaTabs();
+  buildCountryBar();
+  const filt = getFiltered();
+  document.getElementById('cnt').textContent = filt.length + ' studies';
+  const mg    = document.getElementById('mg');
+  const panel = document.getElementById('panel');
+  if (SEL) { mg.className='main split'; panel.style.display=''; renderPanel(); }
+  else     { mg.className='main solo';  panel.style.display='none'; }
+  if (!filt.length) {
+    document.getElementById('tw').innerHTML = '<div class="empty-msg">No studies match the current filters.</div>';
+    return;
+  }
+  const arr = SORT.dir==='desc'?'↓':'↑';
+  const sh  = col => SORT.by===col?'sorted sortable':'sortable';
+  document.getElementById('tw').innerHTML = `<div class="tbl-wrap"><table>
+  <colgroup>
+    <col style="width:28px"><col style="width:100px"><col>
+    <col style="width:110px"><col style="width:52px"><col style="width:88px">
+    <col style="width:72px"><col style="width:70px"><col style="width:80px">
+    <col style="width:90px"><col style="width:105px">
+  </colgroup>
+  <thead><tr>
+    <th></th><th>NCT ID</th><th>Title / Area</th><th>Sponsor</th>
+    <th style="text-align:center">Phase</th><th>Status</th>
+    <th class="${sh('patients')}" onclick="srtBy('patients')" style="text-align:right;cursor:pointer">Patients ${SORT.by==='patients'?arr:'↕'}</th>
+    <th class="${sh('endDate')}"  onclick="srtBy('endDate')"  style="cursor:pointer">End ${SORT.by==='endDate'?arr:'↕'}</th>
+    <th>Countries</th><th>CRO</th><th style="text-align:center">Pipeline</th>
+  </tr></thead>
+  <tbody>${filt.slice(0,2000).map(s => {
+    const crm  = CRM[s.id]||{stage:'new'};
+    const sc   = SC[s.status]||'s-COM';
+    const ph   = s.phase;
+    const phc  = ph==='NA'?'ph-na':`ph-${ph}`;
+    const area = AREAS.find(a=>a.id===s.area)||AREAS[AREAS.length-1];
+    const star = crm.starred?'on':'';
+    const isNew= s.firstPosted&&Date.now()-new Date(s.firstPosted)<7*864e5;
+    const flags= (s.latamCountries||[]).slice(0,4).map(c=>LATAM.find(x=>x.name===c)?.flag||'').join(' ');
+    const enrl = s.enrollment ? (String(s.enrollment).length>3?Number(s.enrollment).toLocaleString():s.enrollment) : '—';
+    const end  = s.primEnd ? new Date(s.primEnd).toLocaleDateString('en-GB',{year:'2-digit',month:'short'}) : '—';
+    return `<tr class="${SEL===s.id?'sel':''}" onclick="selectStudy('${s.id.replace(/'/g,"\\'")}')" >
+      <td style="text-align:center;padding:10px 4px"><button class="star-btn ${star}" onclick="event.stopPropagation();toggleStar('${s.id}')" title="Star">★</button></td>
+      <td><a class="nct-a" href="https://clinicaltrials.gov/study/${s.id}" target="_blank" onclick="event.stopPropagation()">${s.id}</a>
+        ${isNew?'<div style="font-size:10px;color:#b45309;font-weight:600">⚡ new</div>':''}
+      </td>
+      <td><div class="title-cell" title="${s.title.replace(/"/g,'&quot;')}">${s.title}</div>
+        <div><span class="tag">${area.label}</span>${s.isEU?' <span class="badge b-eu" style="font-size:10px;padding:1px 5px">🇪🇺 EU</span>':''}</div>
+      </td>
+      <td><div class="spons-cell" title="${s.sponsor}">${s.sponsor}</div></td>
+      <td style="text-align:center"><span class="badge ${phc}">${ph==='NA'?'N/A':'Ph.'+ph}</span></td>
+      <td><span class="badge ${sc}">${SL[s.status]||s.status}</span></td>
+      <td style="text-align:right"><span class="num">${enrl}</span></td>
+      <td><span class="num">${end}</span></td>
+      <td style="font-size:13px">${flags}</td>
+      <td>${s.cro?`<span class="badge b-cro" style="font-size:10px">${s.cro}</span>`:'<span style="color:var(--muted);font-size:11px">—</span>'}</td>
+      <td style="text-align:center" onclick="event.stopPropagation()">
+        <select class="qs-sel p-${crm.stage||'new'}" onchange="updStage('${s.id}',this.value)">
+          ${STAGES.map(st=>`<option value="${st.id}"${(crm.stage||'new')===st.id?' selected':''}>${st.label}</option>`).join('')}
+        </select>
+      </td>
+    </tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+// ── Detail panel ──────────────────────────────────────────────
+function renderPanel() {
+  const panel = document.getElementById('panel');
+  const s = ALL_STUDIES.find(x => x.id === SEL);
+  if (!s) { panel.style.display='none'; return; }
+  const crm  = CRM[s.id]||{stage:'new',notes:[]};
+  const area = AREAS.find(a=>a.id===s.area)||AREAS[AREAS.length-1];
+  const flags= (s.latamCountries||[]).map(c=>LATAM.find(x=>x.name===c)?.flag||'').join(' ');
+  const enrl = s.enrollment ? Number(s.enrollment).toLocaleString() : '—';
+  const fmtD = d => d ? new Date(d).toLocaleDateString('en-GB',{year:'numeric',month:'short',day:'2-digit'}) : '—';
+  panel.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <a class="nct-a" href="https://clinicaltrials.gov/study/${s.id}" target="_blank" style="font-size:12px">${s.id} ↗</a>
+      <button class="close-x" onclick="SEL=null;applyFiltersAndRender()">×</button>
     </div>
-    <div class="panel-title">${s.title}</div>
-    <div class="panel-badges">
-      <span class="badge ${SC[s.status]||'b-COM'}">${SL[s.status]||s.status}</span>
-      <span class="badge ${s.phLbl==='NA'?'ph-na':'ph-'+s.phLbl}">${s.phLbl==='NA'?'N/A':'Phase '+s.phLbl}</span>
+    <div class="ptitle">${s.title}</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="badge ${SC[s.status]||'s-COM'}">${SL[s.status]||s.status}</span>
+      <span class="badge ${s.phase==='NA'?'ph-na':'ph-'+s.phase}">${s.phase==='NA'?'N/A':'Phase '+s.phase}</span>
       <span class="tag" style="padding:3px 8px;border-radius:99px">${area.label}</span>
       ${s.isEU?'<span class="badge b-eu">🇪🇺 EU Sponsor</span>':''}
       ${s.cro?`<span class="badge b-cro">CRO: ${s.cro}</span>`:''}
     </div>
-    ${[
-      ['Sponsor',      s.sponsor],
-      ['Study type',   s.studyType],
-      ['Countries',    flags+' '+s.latamCountries.join(', ')],
-      ['Scope',        s.scope==='national'?`National`:`International (${s.allCountries.length} countries)`],
-      ['Patients',     (s.enrollType==='ESTIMATED'?'~ ':'')+fmtN(s.enrollment)],
-      ['Completion',   fmt(s.primEnd)],
-      ['First posted', fmt(s.firstPosted)],
-      ['Last updated', fmt(s.lastUpdate)],
-    ].map(([l,v])=>`<div class="dr"><span class="dl">${l}</span><span class="dv">${v}</span></div>`).join('')}
-    ${s.conditions.length?`<div style="margin-top:8px;font-size:11px;color:var(--muted);line-height:1.5">${s.conditions.slice(0,5).join(' · ')}${s.conditions.length>5?` +${s.conditions.length-5} more`:''}</div>`:''}
-    <a class="ext-lnk" href="https://clinicaltrials.gov/study/${s.nctId}" target="_blank">View full record on ClinicalTrials.gov →</a>
-
-    <div class="team-note">${cfg.binId?'✅ CRM synced across your QIMA team':'💡 Configure Team CRM in Settings to share leads'}</div>
-
-    <div class="slbl">Assign to sales rep</div>
-    <div class="assign-row">
-      <select class="assign-sel" onchange="assignTo('${s.nctId}',this.value)">
-        <option value="">— Unassigned —</option>
-        ${team.map(m=>`<option value="${m}"${crm.assignedTo===m?' selected':''}>${m}</option>`).join('')}
-      </select>
-    </div>
-
+    ${[['Sponsor',s.sponsor],['Study type',s.studyType],['Countries',flags+' '+(s.latamCountries||[]).join(', ')],
+       ['Patients',enrl],['Completion',fmtD(s.primEnd)],['First posted',fmtD(s.firstPosted)],
+       ['Source',s.source||'ClinicalTrials.gov']]
+      .map(([l,v])=>`<div class="dr"><span class="dl">${l}</span><span class="dv">${v}</span></div>`).join('')}
+    ${(s.conditions||[]).length?`<div style="margin-top:8px;font-size:11px;color:var(--muted);line-height:1.5">${(s.conditions||[]).slice(0,5).join(' · ')}</div>`:''}
+    <a class="ext-lnk" href="https://clinicaltrials.gov/study/${s.id}" target="_blank">View on ClinicalTrials.gov →</a>
+    <div class="team-note">${CFG.binId?'✅ CRM synced across your QIMA team':'💡 Configure Team CRM in Settings to share leads'}</div>
+    <div class="slbl">Assign to</div>
+    <select class="assign-sel" onchange="assignTo('${s.id}',this.value)">
+      <option value="">— Unassigned —</option>
+      ${TEAM.map(m=>`<option value="${m}"${crm.assignedTo===m?' selected':''}>${m}</option>`).join('')}
+    </select>
     <div class="slbl">Sales pipeline</div>
-    <div class="sgrid">${STAGES.map(st=>`<button class="sbtn${(crm.stage||'new')===st.id?' act-'+st.id:''}" onclick="updStage('${s.nctId}','${st.id}')">${st.label}</button>`).join('')}</div>
-
+    <div class="sgrid">${STAGES.map(st=>`<button class="sbtn${(crm.stage||'new')===st.id?' act-'+st.id:''}" onclick="updStage('${s.id}','${st.id}')">${st.label}</button>`).join('')}</div>
     <div class="slbl">Prospecting notes</div>
-    <div class="nlst">${(crm.notes||[]).map(n=>`<div class="note-item">${n.text}<div class="note-meta"><span>${fmt(n.date)}</span>${n.author?`<span>— ${n.author}</span>`:''}</div></div>`).join('')||'<div style="font-size:12px;color:var(--muted);padding:4px 0">No notes yet.</div>'}</div>
+    <div class="nlst">${(crm.notes||[]).map(n=>`<div class="note-item">${n.text}<div class="nd">${new Date(n.date).toLocaleDateString('en-GB')}</div></div>`).join('')||'<div style="font-size:12px;color:var(--muted);padding:4px 0">No notes yet.</div>'}</div>
     <div class="ni-row">
-      <input class="ni" id="note-inp" placeholder="Add a prospecting note..." onkeydown="if(event.key==='Enter')addNote('${s.nctId}')">
-      <button class="panel-btn btn-green" onclick="addNote('${s.nctId}')">Add</button>
+      <input class="ni" id="note-inp" placeholder="Add a prospecting note..." onkeydown="if(event.key==='Enter')addNote('${s.id}')">
+      <button onclick="addNote('${s.id}')" style="padding:7px 12px;font-family:var(--ff);font-size:12px;border:1px solid var(--border);border-radius:var(--rs);background:var(--navy);color:#fff;cursor:pointer">+ Add</button>
     </div>`;
 }
 
-// ══════════════════════════════════════════════
-// ACTIONS
-// ══════════════════════════════════════════════
-function sel(id){S.selId=id;render();}
-function closePnl(){S.selId=null;render();}
-
-function updStage(nctId,stage){
-  if(!S.crm[nctId])S.crm[nctId]={stage:'new',notes:[],starred:false,assignedTo:''};
-  S.crm[nctId].stage=stage;
-  saveCRM();renderKPIs();render();
+// ── Actions ───────────────────────────────────────────────────
+function selectStudy(id) { SEL=id; applyFiltersAndRender(); }
+function updStage(id,stage) {
+  if(!CRM[id]) CRM[id]={stage:'new',notes:[],starred:false};
+  CRM[id].stage=stage; saveCRM(); updateKPIs(); applyFiltersAndRender();
 }
-function assignTo(nctId,person){
-  if(!S.crm[nctId])S.crm[nctId]={stage:'new',notes:[],starred:false};
-  S.crm[nctId].assignedTo=person;
-  saveCRM();render();
+function toggleStar(id) {
+  if(!CRM[id]) CRM[id]={stage:'new',notes:[],starred:false};
+  CRM[id].starred=!CRM[id].starred; saveCRM(); applyFiltersAndRender();
 }
-function toggleStar(nctId){
-  if(!S.crm[nctId])S.crm[nctId]={stage:'new',notes:[],starred:false};
-  S.crm[nctId].starred=!S.crm[nctId].starred;
-  saveCRM();render();
+function assignTo(id,person) {
+  if(!CRM[id]) CRM[id]={stage:'new',notes:[],starred:false};
+  CRM[id].assignedTo=person; saveCRM(); applyFiltersAndRender();
 }
-function addNote(nctId){
+function addNote(id) {
   const inp=document.getElementById('note-inp');
   if(!inp?.value.trim()) return;
-  if(!S.crm[nctId])S.crm[nctId]={stage:'new',notes:[],starred:false};
-  S.crm[nctId].notes=[...(S.crm[nctId].notes||[]),{text:inp.value.trim(),date:new Date().toISOString()}];
-  inp.value='';saveCRM();renderPanel();
+  if(!CRM[id]) CRM[id]={stage:'new',notes:[],starred:false};
+  CRM[id].notes=[...(CRM[id].notes||[]),{text:inp.value.trim(),date:new Date().toISOString()}];
+  inp.value=''; saveCRM(); renderPanel();
   setTimeout(()=>document.getElementById('note-inp')?.focus(),50);
 }
-function setF(btn){
+function setF(btn) {
   const t=btn.dataset.ft,v=btn.dataset.fv;
-  if(t==='status')S.fStatus=v;
-  else if(t==='phase')S.fPhase=v;
-  else if(t==='scope')S.fScope=v;
+  if(t==='status') F.status=v;
+  else if(t==='phase') F.phase=v;
+  else if(t==='scope') F.scope=v;
   document.querySelectorAll(`[data-ft="${t}"]`).forEach(b=>b.classList.toggle('on',b===btn));
-  render();
+  applyFiltersAndRender();
 }
-function setArea(id){S.fArea=id;render();}
-function setCountry(name){S.fCountry=name;render();}
-function toggleEU(btn){S.fEU=!S.fEU;btn.classList.toggle('on',S.fEU);render();}
-function toggleCRO(btn){S.fCRO=!S.fCRO;btn.classList.toggle('on',S.fCRO);render();}
-function toggleNew(btn){S.fNew=!S.fNew;btn.classList.toggle('on',S.fNew);render();}
-function srtBy(col){
-  if(S.sortBy===col)S.sortDir=S.sortDir==='desc'?'asc':'desc';
-  else{S.sortBy=col;S.sortDir='desc';}
-  render();
+function setArea(id) { F.area=id; applyFiltersAndRender(); }
+function setCountry(name) { F.country=name; buildCountryBar(); applyFiltersAndRender(); }
+function toggleEU() {
+  F.eu=!F.eu;
+  document.getElementById('pill-eu').classList.toggle('on',F.eu);
+  applyFiltersAndRender();
+}
+function toggleCRO() {
+  F.cro=!F.cro;
+  document.getElementById('pill-cro').classList.toggle('on',F.cro);
+  applyFiltersAndRender();
+}
+function toggleNew() {
+  F.newOnly=!F.newOnly;
+  document.getElementById('pill-new').classList.toggle('on',F.newOnly);
+  applyFiltersAndRender();
+}
+function srtBy(col) {
+  if(SORT.by===col) SORT.dir=SORT.dir==='desc'?'asc':'desc';
+  else {SORT.by=col;SORT.dir='desc';}
+  applyFiltersAndRender();
+}
+function updateAssignedFilter() {
+  const sel=document.getElementById('assigned-f');
+  if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="all">All reps</option>'+
+    TEAM.map(m=>`<option value="${m}"${cur===m?' selected':''}>${m}</option>`).join('');
 }
 
-// ══════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════
-updateAssignedFilter();
-loadCRM().then(()=>loadAll());
+// ── Settings modal ────────────────────────────────────────────
+function openModal() {
+  const cfg=JSON.parse(localStorage.getItem('qima-cfg')||'{"binId":"","apiKey":""}');
+  document.getElementById('inp-key').value=cfg.apiKey||'';
+  document.getElementById('inp-bin').value=cfg.binId||'';
+  TEAM=JSON.parse(localStorage.getItem('qima-team')||'["Nicolas Jonquet"]');
+  renderTeamList();
+  document.getElementById('modal').style.display='flex';
+}
+function closeModal() { document.getElementById('modal').style.display='none'; }
+function saveSettings() {
+  CFG={apiKey:document.getElementById('inp-key').value.trim(),binId:document.getElementById('inp-bin').value.trim()};
+  localStorage.setItem('qima-cfg',JSON.stringify(CFG));
+  localStorage.setItem('qima-team',JSON.stringify(TEAM));
+  closeModal();
+  updateAssignedFilter();
+  loadCRM().then(()=>{updateKPIs();applyFiltersAndRender();});
+}
+function switchTab(btn,tabId) {
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ['tab-crm','tab-team'].forEach(id=>document.getElementById(id).style.display=id===tabId?'block':'none');
+}
+function renderTeamList() {
+  document.getElementById('team-list').innerHTML=TEAM.map((m,i)=>
+    `<div class="team-row"><span class="team-name">${m}</span><button class="team-del" onclick="TEAM.splice(${i},1);renderTeamList()">×</button></div>`
+  ).join('')||'<div style="font-size:12px;color:var(--muted);padding:4px">No team members yet.</div>';
+}
+function addMember() {
+  const inp=document.getElementById('new-member');
+  if(!inp.value.trim()) return;
+  TEAM.push(inp.value.trim()); inp.value=''; renderTeamList();
+}
+
+// ── Init ──────────────────────────────────────────────────────
+loadCRM().then(() => loadData());
 </script>
 </body>
 </html>
