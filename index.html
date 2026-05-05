@@ -328,12 +328,20 @@ async function loadData() {
     '<div style="font-size:12px;color:var(--muted)">Fetching ' + BACKEND + '</div></div>';
 
   try {
-    const resp = await fetch(`${BACKEND}/api/studies?per_page=10000`,
-      {signal: AbortSignal.timeout(45000)});
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-
-    const data = await resp.json();
-    const raw  = data.data || [];
+    // Fetch all studies in pages of 5000 to avoid memory issues
+    let raw = [];
+    let page = 1;
+    while(true) {
+      const r = await fetch(`${BACKEND}/api/studies?per_page=5000&page=${page}`,
+        {signal: AbortSignal.timeout(45000)});
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const data = await r.json();
+      const batch = data.data || [];
+      raw = raw.concat(batch);
+      if (raw.length >= data.total || batch.length < 5000) break;
+      page++;
+    }
+    const fetchedTotal = raw.length;
 
     ALL_STUDIES = raw.map(s => ({
       id:            s.id || '',
@@ -358,6 +366,7 @@ async function loadData() {
       source:        s.source || 'ClinicalTrials.gov',
     })).filter(s => s.id);
 
+    console.log(`Total studies loaded: ${ALL_STUDIES.length}`);
     document.getElementById('last-upd').textContent =
       new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 
@@ -475,7 +484,7 @@ function applyFiltersAndRender() {
     <th class="${sh('endDate')}"  onclick="srtBy('endDate')"  style="cursor:pointer">End ${SORT.by==='endDate'?arr:'↕'}</th>
     <th>Countries</th><th>CRO</th><th style="text-align:center">Pipeline</th>
   </tr></thead>
-  <tbody>${filt.slice(0,2000).map(s => {
+  <tbody>${filt.map(s => {
     const crm  = CRM[s.id]||{stage:'new'};
     const sc   = SC[s.status]||'s-COM';
     const ph   = s.phase;
@@ -585,7 +594,7 @@ function setF(btn) {
   document.querySelectorAll(`[data-ft="${t}"]`).forEach(b=>b.classList.toggle('on',b===btn));
   applyFiltersAndRender();
 }
-function setArea(id) { F.area=id; applyFiltersAndRender(); }
+function setArea(id) { F.area=id; buildAreaTabs(); applyFiltersAndRender(); }
 function setCountry(name) { F.country=name; buildCountryBar(); applyFiltersAndRender(); }
 function toggleEU() {
   F.eu=!F.eu;
