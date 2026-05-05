@@ -526,7 +526,7 @@ const IS_LOCAL = window.location.protocol === 'file:';
 // ══════════════════════════════════════════════
 const IS_LOCAL   = window.location.protocol === 'file:';
 const PROXY      = 'https://corsproxy.io/?';
-const BACKEND_URL = localStorage.getItem('qima-backend') || null;
+const BACKEND_URL = localStorage.getItem('qima-backend') || 'https://web-production-40cdb.up.railway.app';
 
 // Appel direct ClinicalTrials.gov (fallback si pas de backend)
 async function apiFetch(locn, extraParams={}, pageSize=1000){
