@@ -328,20 +328,12 @@ async function loadData() {
     '<div style="font-size:12px;color:var(--muted)">Fetching ' + BACKEND + '</div></div>';
 
   try {
-    // Fetch all studies in pages of 5000 to avoid memory issues
-    let raw = [];
-    let page = 1;
-    while(true) {
-      const r = await fetch(`${BACKEND}/api/studies?per_page=5000&page=${page}`,
-        {signal: AbortSignal.timeout(45000)});
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const data = await r.json();
-      const batch = data.data || [];
-      raw = raw.concat(batch);
-      if (raw.length >= data.total || batch.length < 5000) break;
-      page++;
-    }
-    const fetchedTotal = raw.length;
+    // Single request — server returns all studies at once
+    const resp = await fetch(`${BACKEND}/api/studies?per_page=20000`,
+      {signal: AbortSignal.timeout(60000)});
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    let raw = data.data || [];
 
     ALL_STUDIES = raw.map(s => ({
       id:            s.id || '',
