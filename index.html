@@ -691,6 +691,51 @@ function phLbl(phases){
   return 'NA';
 }
 
+function renderKPIs(){
+  const t   = S.studies.length;
+  const rec = S.studies.filter(s=>s.status==='RECRUITING').length;
+  const wk  = S.studies.filter(s=>s.firstPosted&&Date.now()-new Date(s.firstPosted)<7*864e5).length;
+  const be  = S.studies.filter(s=>s.isBE).length;
+  const pip = S.studies.filter(s=>['contacted','proposal'].includes(S.crm[s.nctId]?.stage)).length;
+  const icons=[['🌎','#dbeafe'],['✅','#dcfce7'],['⚡','#fef3c7'],['🔬','#fce7f3'],['📊','#ede9fe']];
+  const data=[{v:t,l:'Studies indexed'},{v:rec,l:'Recruiting now'},{v:wk,l:'New this week'},{v:be,l:'Bioequivalence'},{v:pip,l:'Active pipeline'}];
+  const el=document.getElementById('kpis');
+  if(el) el.innerHTML=data.map((k,i)=>
+    `<div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:${icons[i][1]}">${icons[i][0]}</div></div><div class="kpi-v">${k.v}</div><div class="kpi-l">${k.l}</div></div>`
+  ).join('');
+}
+
+function getAreaCounts(){
+  const c={};AREAS.forEach(a=>c[a.id]=0);c.all=S.studies.length;
+  S.studies.forEach(s=>{if(c[s.area]!==undefined)c[s.area]++;});
+  return c;
+}
+
+function renderTabs(){
+  const c=getAreaCounts();
+  const el=document.getElementById('area-tabs');
+  if(!el) return;
+  el.innerHTML=AREAS.map(a=>{
+    const n=c[a.id]||0;
+    if(a.id!=='all'&&n===0) return '';
+    return `<button class="atab${S.fArea===a.id?' on':''}" onclick="setArea('${a.id}')">${a.label}<span class="acount">${n}</span></button>`;
+  }).join('');
+}
+
+function renderCountryBar(){
+  const counts={};
+  LATAM.forEach(c=>counts[c.name]=0);
+  S.studies.forEach(s=>(s.latamCountries||[]).forEach(c=>{if(counts[c]!==undefined)counts[c]++;}));
+  const el=document.getElementById('country-bar');
+  if(!el) return;
+  el.innerHTML=
+    `<button class="cpill${S.fCountry==='all'?' on':''}" onclick="setCountry('all')">🌎 All <span style="font-size:10px;opacity:.7">${S.studies.length}</span></button>`+
+    LATAM.filter(c=>counts[c.name]>0).map(c=>
+      `<button class="cpill${S.fCountry===c.name?' on':''}" onclick="setCountry('${c.name}')">${c.flag} ${c.name} <span style="font-size:10px;opacity:.7">${counts[c.name]}</span></button>`
+    ).join('');
+}
+
+
 function render(){
   if(S.loading) return;
   renderTabs(); renderCountryBar();
