@@ -553,103 +553,84 @@ async function apiFetch(locn, extraParams={}, pageSize=1000){
 
 async function loadAll(){
   S.loading=true; S.error=null; S.studies=[];
-  S.loadProgress = Object.fromEntries(LATAM.map(c=>[c.code,'loading']));
-  renderLoadingScreen();
   const btn=document.getElementById('ref-btn');
   btn.disabled=true; btn.textContent='Loading...';
 
-  const map = new Map();
-  const merge = (studies) => {
-    studies.forEach(s=>{
-      if(!s || !s.nctId) return;
-      if(!map.has(s.nctId)) { map.set(s.nctId,s); return; }
-      const ex = map.get(s.nctId);
-      (s.latamCountries||[]).forEach(c=>{ if(!ex.latamCountries.includes(c)) ex.latamCountries.push(c); });
-      if(s.isBE){ ex.isBE=true; ex.area='be'; }
-    });
-  };
+  // Show loading message
+  document.getElementById('tw').innerHTML=
+    '<div class="loading-wrap"><div class="spinner"></div>' +
+    '<div class="loading-title">Loading from QIMA server...</div>' +
+    '<div class="loading-sub">Fetching stable data — updated nightly</div></div>';
 
-  if(BACKEND_URL){
-    // ── Mode backend : une seule requête, données stables depuis SQLite ──
-    try{
-      document.getElementById('tw').innerHTML=
-        '<div class="loading-wrap"><div class="spinner"></div>' +
-        '<div class="loading-title">Loading from QIMA server...</div>' +
-        '<div class="loading-sub">Stable data from database — updated nightly</div></div>';
+  try {
+    // ── Appel au serveur Railway ────────────────────────────────
+    const resp = await fetch(
+      `${BACKEND_URL}/api/studies?per_page=10000`,
+      {signal: AbortSignal.timeout(45000)}
+    );
 
-      const resp = await fetch(`${BACKEND_URL}/api/studies?per_page=5000`,
-        {signal: AbortSignal.timeout(30000)});
-      if(resp.ok){
-        const data = await resp.json();
-        const studies = (data.data||[]).map(s=>({
-          nctId:         s.id,
-          title:         s.title,
-          status:        s.status||'UNKNOWN',
-          firstPosted:   s.firstPosted||null,
-          lastUpdate:    null,
-          primEnd:       s.primEnd||null,
-          sponsor:       s.sponsor||'—',
-          studyType:     s.studyType||'N/A',
-          phases:        [],
-          phLbl:         s.phase||'NA',
-          enrollment:    s.enrollment||null,
-          enrollType:    null,
-          conditions:    s.conditions||[],
-          allCountries:  [s.country||'Brazil'],
-          latamCountries:s.latamCountries||[s.country||'Brazil'],
-          brSites:       0,
-          scope:         (s.latamCountries||[]).length > 1 ? 'international' : 'national',
-          isBE:          s.isBE||false,
-          isEU:          s.isEU||false,
-          cro:           s.cro||null,
-          area:          s.area||'outros',
-          primaryCountry:s.country||'Brazil',
-          source:        s.source||'ClinicalTrials.gov',
-        }));
-        studies.forEach(s=>{ if(s.nctId) map.set(s.nctId, s); });
-        // Mettre à jour la progression
-        LATAM.forEach(c=>{ S.loadProgress[c.code]='done'; });
-        renderLoadingScreen();
-        console.log(`Backend: ${studies.length} studies loaded from database`);
-      }
-    }catch(e){
-      console.warn('Backend failed, falling back to direct ClinicalTrials.gov:', e.message);
-    }
+    if(!resp.ok) throw new Error(`Server returned HTTP ${resp.status}`);
+
+    const data   = await resp.json();
+    const raw    = data.data || [];
+    console.log(`Backend: ${raw.length} studies received (total: ${data.total})`);
+
+    // Convertir au format attendu par le frontend
+    const studies = raw.map(s => ({
+      nctId:          s.id || '',
+      title:          s.title || 'N/A',
+      status:         s.status || 'UNKNOWN',
+      firstPosted:    s.firstPosted || null,
+      lastUpdate:     null,
+      primEnd:        s.primEnd || null,
+      sponsor:        s.sponsor || '—',
+      studyType:      s.studyType || 'N/A',
+      phases:         [],
+      phLbl:          s.phase || 'NA',
+      enrollment:     s.enrollment || null,
+      enrollType:     null,
+      conditions:     Array.isArray(s.conditions) ? s.conditions : [],
+      allCountries:   [s.country || 'Brazil'],
+      latamCountries: Array.isArray(s.latamCountries) && s.latamCountries.length
+                        ? s.latamCountries : [s.country || 'Brazil'],
+      brSites:        0,
+      scope:          (Array.isArray(s.latamCountries) && s.latamCountries.length > 1)
+                        ? 'international' : 'national',
+      isBE:           Boolean(s.isBE),
+      isEU:           Boolean(s.isEU),
+      cro:            s.cro || null,
+      area:           s.area || 'outros',
+      primaryCountry: s.country || 'Brazil',
+      source:         s.source || 'ClinicalTrials.gov',
+    })).filter(s => s.nctId);  // garder seulement les études avec un ID
+
+    S.studies = studies.sort((a,b) =>
+      new Date(b.firstPosted||0) - new Date(a.firstPosted||0)
+    );
+    console.log(`Mapped ${S.studies.length} studies successfully`);
+
+  } catch(e) {
+    console.error('Backend error:', e.message);
+    S.error = e.message;
+    document.getElementById('tw').innerHTML =
+      `<div class="err-box"><h4>Connection error</h4>${e.message}<br><br>
+      Make sure the Railway server is running at:<br>
+      <code>${BACKEND_URL}</code></div>`;
   }
 
-  // Si pas de backend OU si backend a échoué → fallback direct ClinicalTrials.gov
-  if(map.size === 0){
-    const fetches = LATAM.map(async c=>{
-      try{
-        const raw = await apiFetch(c.name, {}, 2000);
-        merge(raw.map(s=>parseStudy(s, c.name)));
-        S.loadProgress[c.code]='done';
-      }catch{
-        S.loadProgress[c.code]='error';
-      }
-      renderLoadingScreen();
-    });
-    const beTerms = ['bioequivalence','bioequivalência'];
-    const beCountries = ['Brazil','Argentina','Mexico','Chile','Colombia','Peru'];
-    const beFetches = [];
-    for(const country of beCountries){
-      for(const term of beTerms){
-        beFetches.push(
-          apiFetch(country,{'query.term':term},1000)
-            .then(raw=>merge(raw.map(s=>parseStudy(s,country))))
-            .catch(()=>{})
-        );
-      }
-    }
-    await Promise.all([...fetches, ...beFetches]);
-  }
-
-  S.studies=[...map.values()].sort((a,b)=>new Date(b.firstPosted||0)-new Date(a.firstPosted||0));
+  // Toujours libérer le bouton et mettre à jour l'UI
   S.loading=false;
-  document.getElementById('last-upd').textContent=
-    new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
   btn.disabled=false; btn.textContent='↻ Refresh';
-  renderKPIs(); renderTabs(); renderCountryBar(); updateAssignedFilter(); render();
+  document.getElementById('last-upd').textContent =
+    new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+
+  if(S.studies.length > 0){
+    try { renderKPIs(); } catch(e){ console.error('renderKPIs error:', e); }
+    try { renderTabs(); } catch(e){ console.error('renderTabs error:', e); }
+    try { renderCountryBar(); } catch(e){ console.error('renderCountryBar error:', e); }
+    try { updateAssignedFilter(); } catch(e){ console.error('updateAssignedFilter error:', e); }
+    try { render(); } catch(e){ console.error('render error:', e); }
+  }
 }
 
 function parseStudy(raw, primaryCountry=''){
@@ -708,221 +689,6 @@ function phLbl(phases){
   if(p.includes('4'))return'4';if(p.includes('3'))return'3';
   if(p.includes('2'))return'2';if(p.includes('1'))return'1';
   return 'NA';
-}
-
-async function loadAll(){
-  S.loading=true;S.error=null;S.studies=[];
-  S.loadProgress = Object.fromEntries(LATAM.map(c=>[c.code,'loading']));
-  renderLoadingScreen();
-  const btn=document.getElementById('ref-btn');
-  btn.disabled=true; btn.textContent='Loading...';
-
-  const map = new Map();
-
-  const merge = (studies, country) => {
-    studies.forEach(s => {
-      if(!s.nctId) return;
-      if(!map.has(s.nctId)) { map.set(s.nctId,s); return; }
-      const existing = map.get(s.nctId);
-      s.latamCountries.forEach(c=>{ if(!existing.latamCountries.includes(c)) existing.latamCountries.push(c); });
-      if(s.isBE) { existing.isBE=true; existing.area='be'; }
-    });
-  };
-
-  // Fetch all countries in parallel
-  const fetches = LATAM.map(async c => {
-    try{
-      const raw = await apiFetch(c.name, {}, c.size);
-      const parsed = raw.map(s=>parseStudy(s, c.name));
-      merge(parsed, c.name);
-      S.loadProgress[c.code]='done';
-    }catch{
-      S.loadProgress[c.code]='error';
-    }
-    renderLoadingScreen();
-  });
-
-  // Recherches BE ciblées — complètent les requêtes principales
-  // Pagesize 1000 pour récupérer le max, la déduplication par nctId évite les doublons
-  const BE_TERMS = ['bioequivalence', 'bioequivalência'];
-  const BE_COUNTRIES = ['Brazil','Argentina','Mexico','Chile','Colombia','Peru'];
-  const beFetches = [];
-  for(const country of BE_COUNTRIES){
-    for(const term of BE_TERMS){
-      beFetches.push(
-        apiFetch(country, {'query.term': term}, 1000)
-          .then(raw => merge(raw.map(s => {
-            const p = parseStudy(s, country);
-            if(p.isBE){ p.area = 'be'; }
-            return p;
-          })))
-          .catch(()=>{})
-      );
-    }
-  }
-
-  // Fetch BA/BE from backend (REBEC + WHO ICTRP) if configured
-  const backendBEFetch = fetchBEFromBackend().then(beStudies => {
-    if(beStudies.length > 0) {
-      console.log(`Backend returned ${beStudies.length} BE studies`);
-      merge(beStudies);
-    }
-  }).catch(()=>{});
-
-  await Promise.all([...fetches, ...beFetches, backendBEFetch]);
-
-  S.studies = [...map.values()].sort((a,b)=>new Date(b.firstPosted||0)-new Date(a.firstPosted||0));
-  S.loading = false;
-  document.getElementById('last-upd').textContent = new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-  btn.disabled=false; btn.textContent='↻ Refresh';
-  renderKPIs(); renderTabs(); renderCountryBar(); updateAssignedFilter(); render();
-}
-
-function renderLoadingScreen(){
-  document.getElementById('tw').innerHTML=`
-    <div class="loading-wrap">
-      <div class="spinner"></div>
-      <div class="loading-title">Loading LatAm clinical trials registry</div>
-      <div class="loading-sub">Fetching from ClinicalTrials.gov across ${LATAM.length} countries${BACKEND_URL?' + REBEC/WHO ICTRP via backend':''}</div>
-      <div class="progress-countries">
-        ${LATAM.map(c=>`<div class="prog-item ${S.loadProgress[c.code]||'loading'}" id="prog-${c.code}">${c.flag} ${c.name}</div>`).join('')}
-      </div>
-    </div>`;
-}
-
-// ══════════════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════════════
-function getFiltered(){
-  const q  = (document.getElementById('srch')?.value||'').toLowerCase();
-  const sf = document.getElementById('sf')?.value||'all';
-  const af = document.getElementById('assigned-f')?.value||'all';
-  return S.studies.filter(s=>{
-    if(S.fArea!=='all'&&s.area!==S.fArea) return false;
-    if(S.fStatus!=='all'&&s.status!==S.fStatus) return false;
-    if(S.fPhase!=='all'&&s.phLbl!==S.fPhase) return false;
-    if(S.fScope!=='all'&&s.scope!==S.fScope) return false;
-    if(S.fCountry!=='all'&&!s.latamCountries.includes(S.fCountry)) return false;
-    if(S.fEU && !s.isEU) return false;
-    if(S.fCRO && !s.cro) return false;
-    if(S.fNew && !(s.firstPosted&&Date.now()-new Date(s.firstPosted)<7*864e5)) return false;
-    const crm = S.crm[s.nctId]||{};
-    if(sf==='starred'){if(!crm.starred) return false;}
-    else if(sf!=='all'&&(crm.stage||'new')!==sf) return false;
-    if(af!=='all'&&crm.assignedTo!==af) return false;
-    if(q) return s.title.toLowerCase().includes(q)||s.sponsor.toLowerCase().includes(q)||
-                  s.nctId.toLowerCase().includes(q)||(s.cro||'').toLowerCase().includes(q)||
-                  s.conditions.some(c=>c.toLowerCase().includes(q));
-    return true;
-  }).sort((a,b)=>{
-    let va,vb;
-    if(S.sortBy==='patients'){va=a.enrollment||0;vb=b.enrollment||0;}
-    else if(S.sortBy==='endDate'){va=new Date(a.primEnd||0);vb=new Date(b.primEnd||0);}
-    else{va=new Date(a.firstPosted||0);vb=new Date(b.firstPosted||0);}
-    return S.sortDir==='desc'?(vb>va?1:-1):(va>vb?1:-1);
-  });
-}
-
-function getAreaCounts(){
-  const c={};AREAS.forEach(a=>c[a.id]=0);c.all=S.studies.length;
-  S.studies.forEach(s=>{if(c[s.area]!==undefined)c[s.area]++;});
-  return c;
-}
-
-function renderKPIs(){
-  const t   = S.studies.length;
-  const rec = S.studies.filter(s=>s.status==='RECRUITING').length;
-  const wk  = S.studies.filter(s=>s.firstPosted&&Date.now()-new Date(s.firstPosted)<7*864e5).length;
-  const be  = S.studies.filter(s=>s.isBE).length;
-  const pip = S.studies.filter(s=>['contacted','proposal'].includes(S.crm[s.nctId]?.stage)).length;
-  const icons=[['🌎','#dbeafe'],[' ✅','#dcfce7'],['⚡','#fef3c7'],['🔬','#fce7f3'],['📊','#ede9fe']];
-  const data=[{v:t,l:'Studies indexed'},{v:rec,l:'Recruiting now'},{v:wk,l:'New this week'},{v:be,l:'Bioequivalence'},{v:pip,l:'Active pipeline'}];
-  document.getElementById('kpis').innerHTML=data.map((k,i)=>
-    `<div class="kpi"><div class="kpi-top"><div class="kpi-icon" style="background:${icons[i][1]}">${icons[i][0]}</div></div><div class="kpi-v">${k.v}</div><div class="kpi-l">${k.l}</div></div>`
-  ).join('');
-}
-
-function renderTabs(){
-  const c=getAreaCounts();
-  document.getElementById('area-tabs').innerHTML=AREAS.map(a=>{
-    const n=c[a.id]||0;
-    if(a.id!=='all'&&n===0) return '';
-    return `<button class="atab${S.fArea===a.id?' on':''}" onclick="setArea('${a.id}')">${a.label}<span class="acount">${n}</span></button>`;
-  }).join('');
-}
-
-function renderCountryBar(){
-  const counts={};
-  LATAM.forEach(c=>counts[c.name]=0);
-  S.studies.forEach(s=>s.latamCountries.forEach(c=>{if(counts[c]!==undefined)counts[c]++;}));
-  document.getElementById('country-bar').innerHTML=
-    `<button class="cpill${S.fCountry==='all'?' on':''}" onclick="setCountry('all')">🌎 All <span style="font-size:10px;opacity:.7">${S.studies.length}</span></button>` +
-    LATAM.filter(c=>counts[c.name]>0).map(c=>
-      `<button class="cpill${S.fCountry===c.name?' on':''}" onclick="setCountry('${c.name}')">${c.flag} ${c.name} <span style="font-size:10px;opacity:.7">${counts[c.name]}</span></button>`
-    ).join('');
-}
-
-function fmt(d,sh=false){
-  if(!d) return '—';
-  try{return new Date(d).toLocaleDateString('en-GB',sh?{year:'2-digit',month:'short'}:{year:'numeric',month:'short'});}catch{return d;}
-}
-function fmtN(n){ if(!n&&n!==0) return '—'; return parseInt(n).toLocaleString('en-US'); }
-
-function renderTable(){
-  if(S.error) return `<div class="err-box"><h4>Failed to load</h4>${S.error}</div>`;
-  if(S.loading) return '<div class="loading-wrap"><div class="spinner"></div></div>';
-  const filt=getFiltered();
-  document.getElementById('cnt').textContent=filt.length+' studies';
-  if(!filt.length) return '<div class="empty-msg">No studies match the current filters.</div>';
-  const arr=S.sortDir==='desc'?'↓':'↑';
-  const sh=col=>S.sortBy===col?'sorted sortable':'sortable';
-  return`<table>
-  <colgroup>
-    <col style="width:28px"><col style="width:100px"><col><col style="width:108px">
-    <col style="width:50px"><col style="width:82px"><col style="width:68px"><col style="width:70px">
-    <col style="width:100px"><col style="width:90px"><col style="width:98px">
-  </colgroup>
-  <thead><tr>
-    <th></th><th>NCT ID</th><th>Title / Area</th><th>Sponsor</th>
-    <th style="text-align:center">Phase</th><th>Status</th>
-    <th class="${sh('patients')}" onclick="srtBy('patients')" style="text-align:right;cursor:pointer">Patients ${S.sortBy==='patients'?arr:'↕'}</th>
-    <th class="${sh('endDate')}" onclick="srtBy('endDate')" style="cursor:pointer">End ${S.sortBy==='endDate'?arr:'↕'}</th>
-    <th>Countries</th><th>CRO</th><th style="text-align:center">Pipeline</th>
-  </tr></thead>
-  <tbody>${filt.map(s=>{
-    const crm=S.crm[s.nctId]||{stage:'new'};
-    const sc=SC[s.status]||'b-COM';
-    const ph=s.phLbl;
-    const phc=ph==='NA'?'ph-na':`ph-${ph}`;
-    const area=AREAS.find(a=>a.id===s.area)||AREAS[AREAS.length-1];
-    const est=s.enrollType==='ESTIMATED'?'~':'';
-    const star=crm.starred?'on':'';
-    const flags=s.latamCountries.slice(0,5).map(c=>COUNTRY_MAP[c]?.flag||'').join(' ');
-    const isNew=s.firstPosted&&Date.now()-new Date(s.firstPosted)<7*864e5;
-    return`<tr class="${S.selId===s.nctId?'sel':''}" onclick="sel('${s.nctId}')">
-      <td style="text-align:center;padding:10px 4px"><button class="star-btn ${star}" onclick="event.stopPropagation();toggleStar('${s.nctId}')" title="Star">★</button></td>
-      <td>
-        <a class="nct-a" href="https://clinicaltrials.gov/study/${s.nctId}" target="_blank" onclick="event.stopPropagation()">${s.nctId}</a>
-        ${isNew?'<div style="font-size:10px;color:#b45309;font-weight:600;margin-top:2px">⚡ new</div>':''}
-      </td>
-      <td>
-        <div class="title-cell" title="${s.title.replace(/"/g,'&quot;')}">${s.title}</div>
-        <div><span class="tag">${area.label}</span>${s.isEU?' <span class="badge b-eu" style="font-size:10px;padding:1px 5px">🇪🇺 EU</span>':''}</div>
-      </td>
-      <td><div class="spons-cell" title="${s.sponsor}">${s.sponsor}</div></td>
-      <td style="text-align:center"><span class="badge ${phc}">${ph==='NA'?'N/A':'Ph.'+ph}</span></td>
-      <td><span class="badge ${sc}">${SL[s.status]||s.status}</span></td>
-      <td style="text-align:right"><span class="num">${est}${fmtN(s.enrollment)}</span></td>
-      <td><span class="num">${fmt(s.primEnd,true)}</span></td>
-      <td><div class="flag-badges" title="${s.latamCountries.join(', ')}">${flags}${s.latamCountries.length>5?`<span style="font-size:10px;color:var(--muted)">+${s.latamCountries.length-5}</span>`:''}</div></td>
-      <td>${s.cro?`<span class="badge b-cro" style="font-size:10px">${s.cro}</span>`:'<span style="color:var(--muted);font-size:11px">—</span>'}</td>
-      <td style="text-align:center" onclick="event.stopPropagation()">
-        <select class="qs-sel p-${crm.stage||'new'}" onchange="updStage('${s.nctId}',this.value)">
-          ${STAGES.map(st=>`<option value="${st.id}"${(crm.stage||'new')===st.id?' selected':''}>${st.label}</option>`).join('')}
-        </select>
-      </td>
-    </tr>`;
-  }).join('')}</tbody></table>`;
 }
 
 function render(){
